@@ -1,0 +1,28 @@
+# Version of the docker-compose specification
+version: "3"
+
+# Define services to run in the compose file
+services:
+  # The name of the service (can be anything you want)
+  mariadb:
+    # The Docker image to use for this service
+    image: mariadb:latest
+    # Define environment variables for the container
+    environment:
+      # The root password for MariaDB. Change this to something secure in a real deployment.
+      MYSQL_ROOT_PASSWORD: password
+      # The name of the database to create on container startup
+      MYSQL_DATABASE: casaos
+      # Username for a new user (with superuser privileges)
+      MYSQL_USER: bigbear
+      # Password for the new user
+      MYSQL_PASSWORD: password
+    # Map ports between the host and the container. Format: host:container
+    ports:
+      # Map port 3306 in the container to port 3306 on the host
+      - "3306:3306"
+    # Define volume mounts for data persistence
+    volumes:
+      # Map the /var/lib/mysql directory in the container to a named volume called mariadb_data on the host
+      # This ensures that database data persists even if the container is removed
+      - /data/mariadb:/var/lib/mysql
