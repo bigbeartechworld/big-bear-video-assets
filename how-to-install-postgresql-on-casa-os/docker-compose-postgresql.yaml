@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:15 # Use the latest official PostgreSQL image
+    environment:
+      POSTGRES_USER: bigbear # The PostgreSQL user's username
+      POSTGRES_PASSWORD: password # The PostgreSQL user's password
+      POSTGRES_DB: casaos # The default database to be created on startup
+    ports:
+      - "5432:5432" # Expose PostgreSQL's default port on the host machine
+    volumes:
+      - /data/postgresql:/var/lib/postgresql/data # Persist the database data on a named volume
