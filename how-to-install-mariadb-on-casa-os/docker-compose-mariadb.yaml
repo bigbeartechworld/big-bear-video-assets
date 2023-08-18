@@ -23,6 +23,6 @@ services:
       - "3306:3306"
     # Define volume mounts for data persistence
     volumes:
-      # Map the /var/lib/mysql directory in the container to a named volume called mariadb_data on the host
+      # Map the /var/lib/mysql directory in the container to /data/mariadb on the host
       # This ensures that database data persists even if the container is removed
       - /data/mariadb:/var/lib/mysql
