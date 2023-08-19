@@ -1,0 +1,36 @@
+---
+# This is a Docker Compose version declaration.
+version: "3"
+
+# The 'services' key defines the containers that should be created.
+services:
+  # This is the name of the service (container). In this case, it's 'nextcloud'.
+  nextcloud:
+    # The 'image' key specifies which Docker image to use for this container.
+    image: lscr.io/linuxserver/nextcloud:latest
+
+    # The 'container_name' key specifies a custom name for the container.
+    container_name: nextcloud
+
+    # The 'environment' key is used to set environment variables inside the container.
+    environment:
+      # PUID & PGID are used to set user/group IDs.
+      - PUID=1000
+      - PGID=1000
+      # TZ sets the timezone for the container.
+      - TZ=Etc/UTC
+
+    # The 'volumes' key maps paths on the host to paths in the container.
+    volumes:
+      # Map '/data/nextcloud/appdata' on the host to '/config' inside the container.
+      - /data/nextcloud/appdata:/config
+      # Map '/data/nextcloud/data' on the host to '/data' inside the container.
+      - /data/nextcloud/data:/data
+
+    # The 'ports' key maps ports on the host to ports in the container.
+    ports:
+      # Map port 443 on the host to port 443 inside the container.
+      - 443:443
+
+    # The 'restart' key specifies the restart policy for the container.
+    restart: unless-stopped
