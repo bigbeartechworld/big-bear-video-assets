@@ -10,4 +10,4 @@ services:
     ports:
       - "5432:5432" # Expose PostgreSQL's default port on the host machine
     volumes:
-      - /data/postgresql:/var/lib/postgresql/data # Persist the database data on a named volume
+      - /DATA/AppData/postgresql:/var/lib/postgresql/data # Persist the database data on a named volume
