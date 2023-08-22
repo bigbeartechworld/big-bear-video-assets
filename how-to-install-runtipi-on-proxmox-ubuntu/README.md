@@ -17,23 +17,23 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/bigbeartechworld/big-be
 Start runtipi:
 
 ```bash
-sudo /root/runtipi/scripts/start.sh
+sudo /opt/runtipi/scripts/start.sh
 ```
 
 Stop runtipi:
 
 ```bash
-sudo /root/runtipi/scripts/stop.sh
+sudo /opt/runtipi/scripts/stop.sh
 ```
 
 Update runtipi:
 
 ```bash
-sudo /root/runtipi/scripts/update.sh
+sudo /opt/runtipi/scripts/update.sh
 ```
 
 ## Start on system boot
 
 ```bash
-sudo /root/runtipi/scripts/startup.sh
+sudo /opt/runtipi/scripts/startup.sh
 ```
