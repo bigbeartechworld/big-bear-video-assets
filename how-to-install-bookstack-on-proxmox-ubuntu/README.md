@@ -1,6 +1,6 @@
 ## YouTube Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oi1zZEkB9Nc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![How to install Bookstack on Proxmox Ubuntu](https://img.youtube.com/vi/oi1zZEkB9Nc/0.jpg)](https://www.youtube.com/watch?v=oi1zZEkB9Nc)
 
 ## Install Ubuntu
 

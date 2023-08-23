@@ -1,6 +1,6 @@
 ## YouTube Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/y-OHDO381-8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![How to install Nextcloud and MySQL on Casa OS](https://img.youtube.com/vi/y-OHDO381-8/0.jpg)](https://www.youtube.com/watch?v=y-OHDO381-8)
 
 ## Nextcloud Icon
 
