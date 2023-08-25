@@ -16,7 +16,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
 
       # The name of the default database to be created.
-      MYSQL_DATABASE: casaos
+      MYSQL_DATABASE: nocodb
 
       # The username for a new user to be created.
       MYSQL_USER: bigbear
