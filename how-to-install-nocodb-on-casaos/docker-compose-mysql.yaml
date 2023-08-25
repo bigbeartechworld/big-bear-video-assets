@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  # Define a service named 'mysql'.
+  mysql:
+    # Use the version 8 of the official MySQL Docker image.
+    # https://hub.docker.com/_/mysql
+    image: mysql:8
+
+    # Set a custom name for the running container.
+    container_name: mysql
+
+    # Set environment variables for the MySQL service.
+    environment:
+      # The password for the MySQL root user.
+      MYSQL_ROOT_PASSWORD: password
+
+      # The name of the default database to be created.
+      MYSQL_DATABASE: casaos
+
+      # The username for a new user to be created.
+      MYSQL_USER: bigbear
+
+      # The password for the new user.
+      MYSQL_PASSWORD: password
+
+    # Map port 3306 inside the container to port 3306 on the host.
+    ports:
+      - "3306:3306"
+
+    # Map a volume from the host to the container, for data persistence.
+    # This ensures that the data inside the MySQL container is saved on the host.
+    volumes:
+      - /DATA/AppData/mysql:/var/lib/mysql
