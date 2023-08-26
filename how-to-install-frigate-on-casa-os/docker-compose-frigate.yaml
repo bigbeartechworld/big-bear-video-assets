@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:stable
+    privileged: true
+    restart: unless-stopped
+    shm_size: "1g" # adjust based on the number of cameras and resolution
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb # for Coral USB
+      - /etc/localtime:/etc/localtime:ro
+      - /DATA/AppData/frigate/config:/config
+      - /DATA/AppData/frigate/media:/media
+    ports:
+      - "5000:5000" # Web UI
+      - "8554:8554" # RTSP feeds
+      - "8555:8555/tcp" # WebRTC over tcp
+      - "8555:8555/udp" # WebRTC over udp
+    environment:
+      - FRIGATE_RTSP_PASSWORD=change_password
