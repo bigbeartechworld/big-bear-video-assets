@@ -1,5 +1,7 @@
 ## YouTube Video
 
+[![How to install Frigate on Casa OS](https://img.youtube.com/vi/y6YW1OvoDK4/0.jpg)](https://www.youtube.com/watch?v=y6YW1OvoDK4)
+
 ## Frigate Icon
 
 ```text

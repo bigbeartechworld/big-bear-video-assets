@@ -1,6 +1,6 @@
 ## YouTube Video
 
-Working on it. I will post a video soon.
+[![How to install Nocodb and MySQL on Casa OS](https://img.youtube.com/vi/B4PrMiskNOQ/0.jpg)](https://www.youtube.com/watch?v=B4PrMiskNOQ)
 
 ## MySQL Icon
 
