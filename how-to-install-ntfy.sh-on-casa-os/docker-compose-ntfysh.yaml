@@ -12,7 +12,7 @@ services:
     # Command to run upon starting the container
     command: serve
 
-    # Environmental variables for the container
+    # Environment variables for the container
     environment:
       # Optional: Sets the timezone for the container to UTC
       - TZ=UTC
