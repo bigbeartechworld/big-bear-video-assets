@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  # The ntfy service
+  ntfy:
+    # Specifies the Docker image to use for the ntfy service
+    image: binwiederhier/ntfy
+
+    # The name to use for the running container
+    container_name: ntfy
+
+    # Command to run upon starting the container
+    command: serve
+
+    # Environment variables for the container
+    environment:
+      # Optional: Sets the timezone for the container to UTC
+      - TZ=UTC
+
+    # Volume mappings
+    # The left side of the colon refers to the path on the host
+    # The right side refers to the path in the container
+    volumes:
+      # Maps the cache directory from host to container
+      - /data/ntfy/cache:/var/cache/ntfy
+
+      # Maps the config directory from host to container
+      - /data/ntfy/config:/etc/ntfy
+
+    # Ports mapping
+    # The left side is the host port, while the right side is the container port
+    ports:
+      - 7200:80
+
+    # Restart policy
+    # unless-stopped: Restart always except when the user manually stops it
+    restart: unless-stopped
