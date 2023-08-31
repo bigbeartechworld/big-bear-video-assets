@@ -9,5 +9,5 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu.sh)"
 ## Install Tailscale
 
 ```bash
-curl -fsSL https://tailscale.com/install.sh | sh
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/add-tailscale-lxc.sh)" -s [LXC-ID]
 ```
