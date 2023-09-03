@@ -1,0 +1,51 @@
+# Version of the docker-compose
+version: "3"
+
+# Define the services for this docker-compose setup
+services:
+  # Service name: speedtest
+  speedtest:
+    # Container name to be used for the 'speedtest' service
+    container_name: speedtest
+
+    # Docker image to be used for this service
+    image: henrywhitaker3/speedtest-tracker
+
+    # Port mappings - Mapping host port 8765 to container port 80
+    ports:
+      - 8765:80
+
+    # Volumes - Mapping host directory to container directory
+    # Host directory: /DATA/AppData/Speedtest-Tracker
+    # Container directory: /config
+    volumes:
+      - /DATA/AppData/Speedtest-Tracker:/config
+
+    # Environment variables for the service
+    environment:
+      # Timezone setting for the service
+      - TZ=UTC
+
+      # Group ID - left empty but you can specify a value
+      - PGID=
+
+      # User ID - left empty but you can specify a value
+      - PUID=
+
+      # Acknowledge Ookla's EULA and GDPR, set to true to agree
+      - OOKLA_EULA_GDPR=true
+
+    # Logging configuration for the service
+    logging:
+      # Use json-file as the logging driver
+      driver: "json-file"
+
+      # Logging options:
+      # - Maximum number of log files: 10
+      # - Maximum size of each log file: 200 kilobytes
+      options:
+        max-file: "10"
+        max-size: "200k"
+
+    # Restart policy for the service: restart unless manually stopped
+    restart: unless-stopped
