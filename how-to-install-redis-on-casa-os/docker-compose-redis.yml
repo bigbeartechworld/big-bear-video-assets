@@ -1,0 +1,23 @@
+# Specify the version of the Docker Compose file format.
+# This determines the available features and syntax.
+version: "3"
+
+# Define the services (containers) that will be created and run.
+services:
+  # Service name: 'redis'
+  redis:
+    # The Docker image to use for this service.
+    image: redis:latest
+
+    # Assign a custom name to the running container.
+    container_name: big-bear-redis
+
+    # Map ports between the host and the container.
+    # Host port is on the left (6379) and container port is on the right (6379).
+    ports:
+      - "6379:6379"
+
+    # Mount volumes to persist data and share it between the host and container.
+    # The host directory (/DATA/AppData/redis/data) is mounted to the container directory (/data).
+    volumes:
+      - /DATA/AppData/redis/data:/data
