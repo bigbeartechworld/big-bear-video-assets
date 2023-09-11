@@ -1,0 +1,26 @@
+# Specifies the version of the Docker Compose file format
+version: "3.8"
+
+# Defines a set of services that will run together in a coordinated manner
+services:
+  # Defines a service with the name 'pingvin-share'
+  pingvin-share:
+    # Specifies the Docker image to be used for this service
+    image: stonith404/pingvin-share
+
+    # Policy to determine when the service should be restarted
+    # In this case, the service will always restart unless it is manually stopped by the user
+    restart: unless-stopped
+
+    # Defines port mappings between the host and the container
+    ports:
+      # Maps port 3000 on the host machine to port 3000 inside the container
+      - 3000:3000
+
+    # Defines volume mounts for persistent storage for the service
+    volumes:
+      # Maps the 'data' directory from the host to the 'backend data' directory inside the container
+      - "/data/pingvin-share/data:/opt/app/backend/data"
+
+      # Maps the 'images' directory from the host to the 'frontend public img' directory inside the container
+      - "/data/pingvin-share/images:/opt/app/frontend/public/img"
