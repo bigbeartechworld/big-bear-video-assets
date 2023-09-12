@@ -1,0 +1,37 @@
+# Docker Compose version
+version: "3"
+
+# Define services (containers to be created)
+services:
+  # Service name: pihole
+  pihole:
+    # Name of the container instance
+    container_name: pihole
+
+    # Image to use for this container
+    # Use the specified version of the pihole image
+    image: pihole/pihole:2023.05.2
+
+    # Expose and map ports (host:container)
+    ports:
+      - "53:53/tcp" # DNS (TCP)
+      - "53:53/udp" # DNS (UDP)
+      - "7300:80/tcp" # Web UI HTTP
+
+    # Environment variables
+    environment:
+      TZ: "UTC" # Time Zone; Update this to your time zone
+      WEBPASSWORD: "password" # Admin password for web UI; Change this to your desired admin password
+
+    # Mount volumes for persistent data
+    volumes:
+      - "/DATA/AppData/pihole/data/pihole:/etc/pihole" # Pi-hole data
+      - "/DATA/AppData/pihole/data/dnsmasq:/etc/dnsmasq.d" # dnsmasq data
+
+    # Restart policy for the container when it exits
+    restart: unless-stopped
+
+    # DNS servers for this container to use
+    dns:
+      - 127.0.0.1 # Localhost for internal resolution
+      - 1.1.1.1 # Cloudflare DNS for external resolution
