@@ -8,16 +8,19 @@ services:
     # Docker image to be used for this service
     image: directus/directus:latest
 
+    # Container name
+    container_name: directus
+
     # Port mapping: host port : container port
     ports:
-      - 8055:8055 # Directus typically runs on port 8055
+      - "8055:8055" # Directus typically runs on port 8055
 
     # Volumes (persistent storage) for the container
     volumes:
       # Mount the database directory from the host to the container
-      - /DATA/AppData/directus/database:/directus/database
+      - "/DATA/AppData/directus/database:/directus/database"
       # Mount the uploads directory from the host to the container
-      - /DATA/AppData/directus/uploads:/directus/uploads
+      - "/DATA/AppData/directus/uploads:/directus/uploads"
 
     # Environment variables for the container
     environment:
@@ -32,6 +35,6 @@ services:
       # Database client to be used (here, SQLite is being used)
       DB_CLIENT: "sqlite3"
       # Path to SQLite database file
-      DB_FILENAME: "/DATA/AppData/directus/database/data.db"
+      DB_FILENAME: "/directus/database/data.db"
       # Enable or disable WebSocket support (useful for real-time features)
-      WEBSOCKETS_ENABLED: true
+      WEBSOCKETS_ENABLED: "true"
