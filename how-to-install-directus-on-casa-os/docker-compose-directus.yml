@@ -1,0 +1,37 @@
+# Version of the Docker Compose file format
+version: "3"
+
+# Define the services to be deployed
+services:
+  # Service name
+  directus:
+    # Docker image to be used for this service
+    image: directus/directus:latest
+
+    # Port mapping: host port : container port
+    ports:
+      - 8055:8055 # Directus typically runs on port 8055
+
+    # Volumes (persistent storage) for the container
+    volumes:
+      # Mount the database directory from the host to the container
+      - /DATA/AppData/directus/database:/directus/database
+      # Mount the uploads directory from the host to the container
+      - /DATA/AppData/directus/uploads:/directus/uploads
+
+    # Environment variables for the container
+    environment:
+      # A key for the Directus instance
+      KEY: "replace-with-random-value"
+      # A secret for the Directus instance
+      SECRET: "replace-with-random-value"
+      # Admin email for Directus instance
+      ADMIN_EMAIL: "admin@example.com"
+      # Admin password for Directus instance
+      ADMIN_PASSWORD: "password"
+      # Database client to be used (here, SQLite is being used)
+      DB_CLIENT: "sqlite3"
+      # Path to SQLite database file
+      DB_FILENAME: "/DATA/AppData/directus/database/data.db"
+      # Enable or disable WebSocket support (useful for real-time features)
+      WEBSOCKETS_ENABLED: true
