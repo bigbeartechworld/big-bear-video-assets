@@ -13,8 +13,8 @@ services:
 
     # Set environment variables for Baserow.
     environment:
-      # Set the public URL for Baserow to localhost.
-      BASEROW_PUBLIC_URL: "http://localhost"
+      # Set the public URL for Baserow to use.
+      BASEROW_PUBLIC_URL: "http://[CASAOS_IP]:7300"
 
     # Map ports from the host machine to the Baserow container.
     ports:
