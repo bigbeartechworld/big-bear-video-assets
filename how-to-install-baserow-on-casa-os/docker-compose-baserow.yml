@@ -1,0 +1,26 @@
+# Define the version of Docker Compose being used.
+version: "3"
+
+# Define the services that will be managed by Docker Compose.
+services:
+  # Configuration for the Baserow service.
+  baserow:
+    # Set the name of the Docker container.
+    container_name: baserow
+
+    # Use the specified Docker image for Baserow and specify its version.
+    image: baserow/baserow:1.20.0
+
+    # Set environment variables for Baserow.
+    environment:
+      # Set the public URL for Baserow to localhost.
+      BASEROW_PUBLIC_URL: "http://localhost"
+
+    # Map ports from the host machine to the Baserow container.
+    ports:
+      - "7300:80" # Map port 7300 on the host to port 80 in the container.
+      - "7301:443" # Map port 7301 on the host to port 443 in the container.
+
+    # Define volumes to persist data between container restarts.
+    volumes:
+      - /DATA/AppData/baserow/data:/baserow/data
