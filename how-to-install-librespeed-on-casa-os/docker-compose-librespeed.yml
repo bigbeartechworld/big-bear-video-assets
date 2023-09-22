@@ -1,0 +1,28 @@
+# Docker Compose file (version 3)
+version: "3"
+
+# Define the services managed by Docker Compose
+services:
+  # Service for LibreSpeed, a speedtest service
+  librespeed:
+    # The Docker image to use for this service
+    image: linuxserver/librespeed
+
+    # The name to give to the container
+    container_name: librespeed
+
+    # Environment variables for the container
+    environment:
+      - PUID=1000 # User ID
+      - PGID=1000 # Group ID
+
+    # Volumes for persistent data storage
+    volumes:
+      - /DATA/AppData/librespeed/config:/config # Map host directory to container directory
+
+    # Ports mapping
+    ports:
+      - 7400:80 # Map host port 7400 to container port 80
+
+    # Restart policy for the container
+    restart: unless-stopped # Restart the container unless manually stopped
