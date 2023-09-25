@@ -1,0 +1,18 @@
+# This is a Docker Compose file in version 3 syntax.
+version: "3"
+
+# This section defines the services to be run.
+services:
+  # Define a service named 'memos'.
+  memos:
+    # Use the latest image from the neosmemo/memos repository.
+    image: neosmemo/memos:latest
+    # Assign a container name 'memos' for easier identification.
+    container_name: memos
+    # Mount a volume to persist data.
+    # Map the host directory '/DATA/AppData/memos' to '/var/opt/memos' in the container.
+    volumes:
+      - /DATA/AppData/memos:/var/opt/memos
+    # Map port 5230 on the host to port 5230 on the container.
+    ports:
+      - 5230:5230
