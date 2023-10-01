@@ -1,0 +1,24 @@
+# Specify the Docker Compose file version
+version: "3"
+
+# Define the services to be run
+services:
+  # Name of the service
+  flame:
+    # Specify the Docker image to use for the Flame service
+    image: pawelmalak/flame:multiarch2.3.1
+    # Mount volumes to persist data and allow communication with the Docker daemon
+    volumes:
+      # Mount the data directory from the host to the container
+      - /DATA/AppData/flame/data:/app/data
+      # Mount the Docker socket from the host to the container
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Map port 5005 on the host to port 5005 on the container
+    ports:
+      - 5005:5005
+    # Set environment variables for the Flame service
+    environment:
+      # Set the password to access the Flame dashboard
+      - PASSWORD=flame_password
+    # Automatically restart the container unless it is explicitly stopped
+    restart: unless-stopped
