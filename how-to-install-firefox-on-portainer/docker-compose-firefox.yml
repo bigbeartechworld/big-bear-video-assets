@@ -1,0 +1,30 @@
+# Docker Compose version
+version: "3"
+
+# Define the services that will be run by Docker Compose
+services:
+  # Name of the service
+  firefox:
+    # Image to be used for the container
+    image: lscr.io/linuxserver/firefox:latest
+    # Name of the container
+    container_name: firefox
+    # Optional security options for the container
+    security_opt:
+      - seccomp:unconfined # Allow the container to use all system calls
+    # Environment variables for the container
+    environment:
+      - PUID=1000 # User ID
+      - PGID=1000 # Group ID
+      - TZ=Etc/UTC # Timezone setting
+    # Bind mount paths (host:container)
+    volumes:
+      - /DATA/AppData/firefox/config:/config # Map the Firefox config directory from the host to the container
+    # Map ports from host to container (host:container)
+    ports:
+      - 3000:3000 # Map port 3000 on the host to port 3000 on the container
+      - 3001:3001 # Map port 3001 on the host to port 3001 on the container
+    # Set shared memory size for the container
+    shm_size: "1gb" # Allocate 1GB of shared memory for the container
+    # Restart policy for the container
+    restart: unless-stopped # Restart the container unless it was explicitly stopped
