@@ -30,4 +30,4 @@ services:
     # Map a volume from the host to the container, for data persistence.
     # This ensures that the data inside the MySQL container is saved on the host.
     volumes:
-      - /data/mysql:/var/lib/mysql
+      - /DATA/AppData/mysql:/var/lib/mysql

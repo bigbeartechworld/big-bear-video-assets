@@ -22,10 +22,10 @@ services:
 
     # The 'volumes' key maps paths on the host to paths in the container.
     volumes:
-      # Map '/data/nextcloud/appdata' on the host to '/config' inside the container.
-      - /data/nextcloud/appdata:/config
-      # Map '/data/nextcloud/data' on the host to '/data' inside the container.
-      - /data/nextcloud/data:/data
+      # Map '/DATA/AppData/nextcloud/config' on the host to '/config' inside the container.
+      - /DATA/AppData/nextcloud/config:/config
+      # Map '/DATA/AppData/nextcloud/data' on the host to '/data' inside the container.
+      - /DATA/AppData/nextcloud/data:/data
 
     # The 'ports' key maps ports on the host to ports in the container.
     ports:

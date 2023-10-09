@@ -31,8 +31,8 @@ services:
 
     # The 'volumes' key maps paths on the host to paths in the container.
     volumes:
-      # Map '/data/mariadb' on the host to '/config' inside the container.
-      - /data/mariadb:/config
+      # Map '/DATA/AppData/nextcloud-mariadb' on the host to '/config' inside the container.
+      - /DATA/AppData/nextcloud-mariadb:/config
 
     # The 'ports' key maps ports on the host to ports in the container.
     ports:
