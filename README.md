@@ -1,6 +1,10 @@
-# big-bear-video-assets
+# Big Bear Video Assets
 
 YouTube Link: https://www.youtube.com/@bigbeartechworld
+
+# BigBearCommunity
+
+If you have a suggestion for a video, post in the [BigBearCommunity](https://community.bigbeartechworld.com/).
 
 # Support My Work
 
