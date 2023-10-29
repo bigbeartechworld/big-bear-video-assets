@@ -1,0 +1,39 @@
+version: "3.3" # Specifies the version of the Docker Compose file format
+
+services: # Defines the services that make up the application
+  # Service: speedtest-tracker
+  speedtest-tracker:
+    container_name: speedtest-tracker # Name of the container
+    ports:
+      - "8080:80" # Maps port 8080 on the host to port 80 in the container
+      - "8443:443" # Maps port 8443 on the host to port 443 in the container
+    environment: # Environment variables for the container
+      - PUID=1000
+      - PGID=1000
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=speedtest_tracker
+      - DB_USERNAME=speedy
+      - DB_PASSWORD=password
+      - TZ=America/Chicago # Timezone setting for the container
+    volumes: # Mounts host paths into the container
+      - "/etc/localtime:/etc/localtime:ro" # Read-only bind mount for localtime
+      - "/DATA/AppData/speedtest-tracker-2/config:/config"
+      - "/DATA/AppData/speedtest-tracker-2/web:/etc/ssl/web"
+    image: "ghcr.io/alexjustesen/speedtest-tracker:latest" # Image to use for the container
+    restart: unless-stopped # Restart policy for the container
+    depends_on: # Specifies dependencies between services
+      - db # speedtest-tracker depends on db service
+
+  # Service: db (Database)
+  db:
+    image: mariadb:10 # Image to use for the database container
+    restart: always # Restart policy for the container
+    environment: # Environment variables for the container
+      - MARIADB_DATABASE=speedtest_tracker
+      - MARIADB_USER=speedy
+      - MARIADB_PASSWORD=password
+      - MARIADB_RANDOM_ROOT_PASSWORD=true # Generates a random root password
+    volumes: # Mounts host paths into the container
+      - /DATA/AppData/speedtest-tracker-2/db:/var/lib/mysql # Mounts database data directory
