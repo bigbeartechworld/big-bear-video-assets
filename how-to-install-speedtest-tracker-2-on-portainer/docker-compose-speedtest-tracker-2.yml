@@ -3,37 +3,37 @@ version: "3.3" # Specifies the version of the Docker Compose file format
 services: # Defines the services that make up the application
   # Service: speedtest-tracker
   speedtest-tracker:
-    container_name: speedtest-tracker # Name of the container
+    container_name: speedtest-tracker # Name of the container, useful for referencing and managing the container
     ports:
-      - "8080:80" # Maps port 8080 on the host to port 80 in the container
-      - "8443:443" # Maps port 8443 on the host to port 443 in the container
-    environment: # Environment variables for the container
-      - PUID=1000
-      - PGID=1000
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=speedtest_tracker
-      - DB_USERNAME=speedy
-      - DB_PASSWORD=password
-      - TZ=America/Chicago # Timezone setting for the container
-    volumes: # Mounts host paths into the container
-      - "/etc/localtime:/etc/localtime:ro" # Read-only bind mount for localtime
-      - "/DATA/AppData/speedtest-tracker-2/config:/config"
-      - "/DATA/AppData/speedtest-tracker-2/web:/etc/ssl/web"
-    image: "ghcr.io/alexjustesen/speedtest-tracker:latest" # Image to use for the container
-    restart: unless-stopped # Restart policy for the container
-    depends_on: # Specifies dependencies between services
-      - db # speedtest-tracker depends on db service
+      - "8080:80" # Maps port 8080 on the host to port 80 in the container; used for HTTP traffic
+      - "8443:443" # Maps port 8443 on the host to port 443 in the container; used for HTTPS traffic
+    environment: # Environment variables for the container, used to configure the container's software
+      - PUID=1000 # User ID for file permissions
+      - PGID=1000 # Group ID for file permissions
+      - DB_CONNECTION=mysql # Database connection type, indicating MySQL is used
+      - DB_HOST=db # Hostname of the database, linked to the db service
+      - DB_PORT=3306 # Port for the MySQL database
+      - DB_DATABASE=speedtest_tracker # Database name to be used
+      - DB_USERNAME=speedy # Database username
+      - DB_PASSWORD=password # Database password
+      - TZ=America/Chicago # Timezone setting for the container; affects how time is reported
+    volumes: # Mounts host paths into the container, for persistent storage or sharing data
+      - "/etc/localtime:/etc/localtime:ro" # Mounts the host's localtime as read-only for accurate time syncing
+      - "/DATA/AppData/speedtest-tracker-2/config:/config" # Volume for storing configuration files
+      - "/DATA/AppData/speedtest-tracker-2/web:/etc/ssl/web" # Volume for storing SSL certificates or web-related files
+    image: "ghcr.io/alexjustesen/speedtest-tracker:latest" # Docker image to use, pulling the latest version
+    restart: unless-stopped # Container restart policy: restart if the container stops unexpectedly
+    depends_on: # Dependency setting, indicating that this service depends on the db service
+      - db # Ensures db service is started before speedtest-tracker
 
   # Service: db (Database)
   db:
-    image: mariadb:10 # Image to use for the database container
-    restart: always # Restart policy for the container
-    environment: # Environment variables for the container
-      - MARIADB_DATABASE=speedtest_tracker
-      - MARIADB_USER=speedy
-      - MARIADB_PASSWORD=password
-      - MARIADB_RANDOM_ROOT_PASSWORD=true # Generates a random root password
-    volumes: # Mounts host paths into the container
-      - /DATA/AppData/speedtest-tracker-2/db:/var/lib/mysql # Mounts database data directory
+    image: mariadb:10 # MariaDB image, version 10, used as the database server
+    restart: always # Restart policy: always restarts the container if it stops for any reason
+    environment: # Environment variables to configure MariaDB
+      - MARIADB_DATABASE=speedtest_tracker # Database to be created automatically
+      - MARIADB_USER=speedy # Username for the database, used by speedtest-tracker
+      - MARIADB_PASSWORD=password # Password for the database user
+      - MARIADB_RANDOM_ROOT_PASSWORD=true # Enables random password generation for the root user for security
+    volumes: # Mount for database storage, ensuring data persists across container restarts and removal
+      - /DATA/AppData/speedtest-tracker-2/db:/var/lib/mysql # Maps the host directory to the container's database storage location
