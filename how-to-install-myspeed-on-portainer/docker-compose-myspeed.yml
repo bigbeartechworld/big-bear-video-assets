@@ -1,0 +1,27 @@
+version: "3" # This specifies the version of the Docker Compose file format being used
+
+# This section defines the services to be run
+services:
+  # The 'myspeed' service
+  myspeed:
+    # This sets the Docker image to be used for the 'myspeed' service
+    image: germannewsmaker/myspeed
+
+    # Port mapping from host to container: Host's 5216 is mapped to container's 5216
+    ports:
+      - "5216:5216"
+
+    # This volume mount docker volume 'myspeed_data'
+    # to the container's directory '/myspeed/data'.
+    # This allows for data persistence and sharing between the host and container.
+    volumes:
+      - myspeed_data:/myspeed/data
+
+    # The 'restart' policy is set to 'unless-stopped', meaning the service will automatically restart
+    # unless it has been explicitly stopped by the user.
+    restart: unless-stopped
+
+# Here we define Docker volumes for use by our services
+volumes:
+  myspeed_data: # Define the named volume 'myspeed_data'
+    driver: local # Optional: Specifies that the local volume driver should be used
