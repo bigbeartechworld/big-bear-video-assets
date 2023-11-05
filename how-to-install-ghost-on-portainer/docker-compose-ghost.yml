@@ -1,14 +1,14 @@
 version: "3" # Use Docker Compose version 3
 
 services:
-  app:
+  ghost:
     image: ghost:5.69.0-alpine # Use the Ghost Docker image
     restart: on-failure # Restart the container on failure
     environment:
       - database__client=mysql # Set Ghost's database client to MySQL
       - database__connection__host=db # Set the database host to the "db" service
       - database__connection__user=ghost # Set the database user
-      - database__connection__password=casaos # Set the database password
+      - database__connection__password=portainer # Set the database password
       - database__connection__database=ghost # Set the database name
       - url=http://[YOUR_IP]:2368 # Set the base URL for the Ghost application
     volumes:
@@ -26,8 +26,8 @@ services:
     environment:
       - MYSQL_USER=ghost # Set the MySQL user
       - MYSQL_DATABASE=ghost # Set the MySQL database name
-      - MYSQL_PASSWORD=casaos # Set the MySQL user's password
-      - MYSQL_ROOT_PASSWORD=casaos # Set the MySQL root password
+      - MYSQL_PASSWORD=portainer # Set the MySQL user's password
+      - MYSQL_ROOT_PASSWORD=portainer # Set the MySQL root password
 
 volumes:
   ghost-content: # Define a named volume for Ghost content
