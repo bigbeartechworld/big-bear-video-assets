@@ -1,0 +1,18 @@
+version: "3" # Specify the version of Docker Compose syntax
+
+services:
+  # Service name: app
+  app:
+    image: traccar/traccar:latest # Specifies the Docker image to use for this service. Using the latest version of the traccar image.
+    container_name: traccar # Name of the container that will be created
+    hostname: traccar # Hostname of the container
+    restart: unless-stopped # Restart policy. The container will restart unless it's explicitly stopped.
+
+    ports: # Ports mapping from the host to the container
+      - "8080:8082" # Maps port 8080 on the host to port 8082 in the container
+      - "5000-5150:5000-5150" # Maps ports range 5000-5150 on the host to the same range in the container for TCP
+      - "5000-5150:5000-5150/udp" # Maps ports range 5000-5150 on the host to the same range in the container for UDP
+
+    volumes: # Defines volume mounts for the container
+      - /DATA/AppData/big-bear-traccar/logs:/opt/traccar/logs:rw # Mounts the logs directory from the host to the container with read and write permissions
+      - /DATA/AppData/big-bear-traccar/traccar.xml:/opt/traccar/conf/traccar.xml:ro # Mounts the traccar.xml config file from the host to the container with read-only permissions
