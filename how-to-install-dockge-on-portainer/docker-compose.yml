@@ -1,0 +1,42 @@
+# Docker Compose version
+version: "3.8"
+
+# Service definitions for the big-bear-dockge application
+services:
+  # Service name: app
+  # The `app` service definition
+  dockge:
+    # Name of the container
+    container_name: big-bear-dockge
+
+    # Image to be used for the container
+    image: louislam/dockge:1
+
+    # Environment variables
+    environment:
+      # Tell Dockge where is your stacks directory
+      DOCKGE_STACKS_DIR: "/opt/stacks"
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mount the Docker socket
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Mount the dockge_data volume to store app data
+      - dockge_data:/app/data
+
+      # Mount the stacks directory
+      - /opt/stacks:/opt/stacks
+
+    # Ports mapping between host and container
+    ports:
+      # Map port 5001 on the host to port 5001 in the container
+      - 5001:5001
+
+volumes:
+  # Define the dockge_data volume with the local driver
+  dockge_data:
+    driver: local
