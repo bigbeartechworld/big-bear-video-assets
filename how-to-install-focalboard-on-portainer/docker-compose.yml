@@ -1,0 +1,21 @@
+version: "3" # You can adjust the version as needed
+
+services:
+  # The `app` service for the Focalboard application
+  app:
+    # Name of the container
+    container_name: big-bear-focalboard
+    # Docker image to be used
+    image: mattermost/focalboard:7.11.4
+    # Restart policy for the service
+    restart: unless-stopped
+    # Port mappings for the service
+    ports:
+      - "8000:8000"
+    # Volumes for the service HOST -> CONTAINER
+    volumes:
+      - focalboard_data:/opt/focalboard/data
+
+volumes:
+  focalboard_data:
+    driver: local
