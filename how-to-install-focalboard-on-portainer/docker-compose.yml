@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     # Port mappings for the service
     ports:
-      - "8000:8000"
+      - "8001:8000"
     # Volumes for the service HOST -> CONTAINER
     volumes:
       - focalboard_data:/opt/focalboard/data
