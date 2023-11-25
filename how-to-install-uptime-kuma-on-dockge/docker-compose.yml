@@ -1,0 +1,14 @@
+version: "3.8" # Specifies the version of Docker Compose file format being used.
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1 # Specifies the Docker image to use for the 'uptime-kuma' service.
+    container_name: uptime-kuma # Sets the name of the Docker container to 'uptime-kuma'.
+    volumes:
+      - uptime-kuma:/app/data # Mounts a volume named 'uptime-kuma' to the '/app/data' directory in the container.
+    ports:
+      - "3001:3001" # Maps port 3001 on the host to port 3001 on the container.
+    restart: always # Specifies that the container should always be restarted if it stops unexpectedly.
+
+volumes:
+  uptime-kuma: # Defines a named volume named 'uptime-kuma' that can be used to persist data between container restarts.
