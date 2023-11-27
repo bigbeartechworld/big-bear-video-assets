@@ -1,0 +1,17 @@
+version: "3" # Docker Compose file version
+
+services:
+  app:
+    image: axllent/mailpit:v1.10.1 # Docker image for the 'app' service
+    container_name: mailpit # Name of the container
+    restart: unless-stopped # Restart policy for the container (unless stopped)
+    volumes:
+      - mailpit_data:/data # Mount a named volume called 'mailpit_data' to /data in the container
+    environment:
+      - TZ=UTC # Setting the container's time zone to UTC
+    ports:
+      - "8025:8025" # Expose port 8025 on the host and map it to port 8025 in the container
+      - "1025:1025" # Expose port 1025 on the host and map it to port 1025 in the container
+
+volumes:
+  mailpit_data: # Define the named volume 'mailpit_data'
