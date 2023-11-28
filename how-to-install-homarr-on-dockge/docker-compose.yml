@@ -1,0 +1,22 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+services: # Defines the services (containers) that make up your application
+  # Name of the first service
+  homarr:
+    container_name: homarr # Sets a custom container name
+    image: ghcr.io/ajnart/homarr:latest # Specifies the Docker image to use, using the latest version
+    restart: unless-stopped # Configures the restart policy (container restarts unless manually stopped)
+
+    volumes: # Maps volumes from the host to the container
+      - homarr-configs:/app/data/configs # Maps host directory for configs to the container's directory
+      - homarr-icons:/app/public/icons # Maps host directory for icons to the container's directory
+
+    ports: # Maps ports from the container to the host
+      - "7575:7575" # Exposes container's port 7575 to the same port on the host
+
+volumes:
+  homarr-configs:
+    driver: local # Specifies the volume driver for homarr-configs volume
+
+  homarr-icons:
+    driver: local # Specifies the volume driver for homarr-icons volume
