@@ -9,6 +9,7 @@ services: # Defines the services (containers) that make up your application
 
     volumes: # Maps volumes from the host to the container
       - homarr-configs:/app/data/configs # Maps host directory for configs to the container's directory
+      - homarr-data:/data # Maps host directory for data to the container's directory
       - homarr-icons:/app/public/icons # Maps host directory for icons to the container's directory
 
     ports: # Maps ports from the container to the host
@@ -17,6 +18,9 @@ services: # Defines the services (containers) that make up your application
 volumes:
   homarr-configs:
     driver: local # Specifies the volume driver for homarr-configs volume
+
+  homarr-data:
+    driver: local # Specifies the volume driver for homarr-data volume
 
   homarr-icons:
     driver: local # Specifies the volume driver for homarr-icons volume
