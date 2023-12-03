@@ -17,7 +17,7 @@ services:
 
     # Environment variables
     environment:
-      - TZ=${TZ} # Timezone
+      - TZ=UTC # Timezone
       - GLANCES_OPT=-w # Glances option to run as a web server
 
     # Use the host's PID namespace
