@@ -1,0 +1,31 @@
+# Docker Compose file version
+version: "3"
+
+# Define services to run
+services:
+  # Service name: glances
+  glances:
+    # Name of the container
+    container_name: glances
+
+    # Docker image to use
+    image: nicolargo/glances:3.4.0.3-full
+
+    # Port mapping between host and container
+    ports:
+      - 7300:61208
+
+    # Environment variables
+    environment:
+      - TZ=${TZ} # Timezone
+      - GLANCES_OPT=-w # Glances option to run as a web server
+
+    # Use the host's PID namespace
+    pid: host
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to mount into the container
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Docker socket for monitoring
