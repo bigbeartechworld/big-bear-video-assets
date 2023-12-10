@@ -16,7 +16,7 @@ services: # Defines the services that make up the application
       - DB_DATABASE=speedtest_tracker # Database name to be used
       - DB_USERNAME=speedy # Database username
       - DB_PASSWORD=password # Database password
-      - TZ=America/Chicago # Timezone setting for the container; affects how time is reported
+      - TZ=UTC # Timezone setting for the container; affects how time is reported
     volumes: # Mounts host paths into the container, for persistent storage or sharing data
       - "/etc/localtime:/etc/localtime:ro" # Mounts the host's localtime as read-only for accurate time syncing
       - "speedtest_tracker_config:/config" # Volume for storing configuration files
