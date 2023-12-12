@@ -1,0 +1,30 @@
+version: "3.8" # Docker Compose file format version
+
+services:
+  # Define the service 'app' for the 2fauth application
+  app:
+    # Name of the Docker container
+    container_name: big-bear-2fauth
+
+    # Docker image to use for this service
+    image: 2fauth/2fauth:4.2.4
+
+    # Restart policy - restart the container unless it's stopped manually
+    restart: unless-stopped
+
+    # Port mapping - Maps port 8000 of the container to port 8000 on the host
+    ports:
+      - "8000:8000"
+
+    # Network mode - Use the default bridge network for this container
+    network_mode: bridge
+
+    # Volume configuration - Map a named volume to the container's directory
+    volumes:
+      - twofauth_data:/2fauth
+
+# Volume definitions (named volumes)
+volumes:
+  twofauth_data:
+    # Define a named volume. Docker manages the location on the host.
+    # Replace with custom driver configurations if needed.
