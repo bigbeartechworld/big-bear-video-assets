@@ -1,0 +1,30 @@
+# Using version 3 of the Docker Compose file format
+version: "3"
+
+# Definition of the services to be run
+services:
+  # Service name: phpmyadmin
+  phpmyadmin:
+    # Docker image to be used for this service
+    image: phpmyadmin/phpmyadmin
+
+    # Name of the container once it's up and running
+    container_name: phpmyadmin
+
+    # Environment variables passed to the service
+    environment:
+      # Host of the database server
+      PMA_HOST: "[YOUR-dockge-IP]"
+
+      # Port of the database server
+      PMA_PORT: "3306"
+
+      # Username to connect to the database
+      PMA_USER: "bigbear"
+
+      # Password to connect to the database
+      PMA_PASSWORD: "password"
+
+    # Port mapping: map host's port 8080 to container's port 80
+    ports:
+      - "8080:80"
