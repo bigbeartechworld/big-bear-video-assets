@@ -1,0 +1,52 @@
+version: "2"
+
+services:
+  # Service definition for BookStack
+  bookstack:
+    image: lscr.io/linuxserver/bookstack # The Docker image for BookStack
+    container_name: bookstack # Name of the container
+    environment: # Environment variables for the BookStack service
+      - PUID=1000 # User ID for the process
+      - PGID=1000 # Group ID for the process
+      - APP_URL=http://localhost:6875 # URL for accessing BookStack
+      - DB_HOST=bookstack_db # Hostname of the database service
+      - DB_PORT=3306 # Port for the database service
+      - DB_USER=bookstack # Database user
+      - DB_PASS=secret # Database password
+      - DB_DATABASE=bookstackapp # Database name
+      - APP_DEFAULT_DARK_MODE=true # Enable dark mode by default
+    volumes:
+      - bookstack_config:/config # Mount the volume for BookStack configuration
+    ports:
+      - 6875:80 # Map port 6875 on the host to port 80 in the container
+    restart: unless-stopped # Restart policy
+    depends_on:
+      - bookstack_db # This service depends on the bookstack_db service
+    networks:
+      - bookstack-network # Connect to the bookstack-network
+
+  # Service definition for the database (MariaDB)
+  bookstack_db:
+    image: lscr.io/linuxserver/mariadb # The Docker image for MariaDB
+    container_name: bookstack_db # Name of the container
+    environment: # Environment variables for the MariaDB service
+      - MYSQL_ROOT_PASSWORD=your_root_password # Root password for MariaDB
+      - MYSQL_DATABASE=bookstackapp # Database name
+      - MYSQL_USER=bookstack # Database user
+      - MYSQL_PASSWORD=secret # Database password
+    volumes:
+      - bookstack_db_data:/var/lib/mysql # Mount the volume for MariaDB data
+    restart: unless-stopped # Restart policy
+    networks:
+      - bookstack-network # Connect to the bookstack-network
+
+volumes:
+  bookstack_config: # Volume for storing BookStack configuration
+    driver: local
+  bookstack_db_data: # Volume for storing MariaDB data
+    driver: local
+
+# Define the network configuration
+networks:
+  bookstack-network: # Custom network for inter-container communication
+    driver: bridge # Use the bridge driver for the network
