@@ -1,0 +1,18 @@
+version: "3.9"
+
+# Define services
+services:
+  # it-tools service
+  it-tools:
+    # Use the latest image from corentinth/it-tools
+    image: "corentinth/it-tools:latest"
+
+    # Map port 8080 on the host to port 80 in the container
+    ports:
+      - "8080:80"
+
+    # Restart the container unless stopped
+    restart: unless-stopped
+
+    # Set the container name to it-tools
+    container_name: it-tools
