@@ -1,0 +1,34 @@
+version: "3" # Use Docker Compose version 3
+
+services:
+  ghost:
+    image: ghost:5.75.2-alpine # Use the Ghost Docker image
+    restart: on-failure # Restart the container on failure
+    environment:
+      - database__client=mysql # Set Ghost's database client to MySQL
+      - database__connection__host=db # Set the database host to the "db" service
+      - database__connection__user=ghost # Set the database user
+      - database__connection__password=portainer # Set the database password
+      - database__connection__database=ghost # Set the database name
+      - url=http://[YOUR_IP]:2368 # Set the base URL for the Ghost application
+    volumes:
+      - ghost-content:/var/lib/ghost/content # Mount a volume for persistent content storage
+    ports:
+      - "2368:2368" # Map port 2368 from the host to port 2368 in the container
+    depends_on:
+      - db # Ensure that the "db" service is started before the "app" service
+
+  db:
+    image: mysql:8.0 # Use the MySQL Docker image
+    restart: on-failure # Restart the container on failure
+    volumes:
+      - mysql-data:/var/lib/mysql # Mount a volume for persistent MySQL data storage
+    environment:
+      - MYSQL_USER=ghost # Set the MySQL user
+      - MYSQL_DATABASE=ghost # Set the MySQL database name
+      - MYSQL_PASSWORD=portainer # Set the MySQL user's password
+      - MYSQL_ROOT_PASSWORD=portainer # Set the MySQL root password
+
+volumes:
+  ghost-content: # Define a named volume for Ghost content
+  mysql-data: # Define a named volume for MySQL data
