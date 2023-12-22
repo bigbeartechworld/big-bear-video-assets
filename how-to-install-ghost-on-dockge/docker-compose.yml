@@ -8,7 +8,7 @@ services:
       - database__client=mysql # Set Ghost's database client to MySQL
       - database__connection__host=db # Set the database host to the "db" service
       - database__connection__user=ghost # Set the database user
-      - database__connection__password=portainer # Set the database password
+      - database__connection__password=dockge # Set the database password
       - database__connection__database=ghost # Set the database name
       - url=http://[YOUR_IP]:2368 # Set the base URL for the Ghost application
     volumes:
@@ -17,6 +17,10 @@ services:
       - "2368:2368" # Map port 2368 from the host to port 2368 in the container
     depends_on:
       - db # Ensure that the "db" service is started before the "app" service
+    # Define the networks section
+    networks:
+      # Define the pihole-network
+      - ghost-network
 
   db:
     image: mysql:8.0 # Use the MySQL Docker image
@@ -26,8 +30,19 @@ services:
     environment:
       - MYSQL_USER=ghost # Set the MySQL user
       - MYSQL_DATABASE=ghost # Set the MySQL database name
-      - MYSQL_PASSWORD=portainer # Set the MySQL user's password
-      - MYSQL_ROOT_PASSWORD=portainer # Set the MySQL root password
+      - MYSQL_PASSWORD=dockge # Set the MySQL user's password
+      - MYSQL_ROOT_PASSWORD=dockge # Set the MySQL root password
+    # Define the networks section
+    networks:
+      # Define the pihole-network
+      - ghost-network
+
+# Define the networks section
+networks:
+  # Define the pihole-network
+  ghost-network:
+    # Set the driver to bridge
+    driver: bridge
 
 volumes:
   ghost-content: # Define a named volume for Ghost content
