@@ -12,8 +12,8 @@ services:
     # Environment variables for the application
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: casaos
-      WORDPRESS_DB_PASSWORD: casaos
+      WORDPRESS_DB_USER: dockge
+      WORDPRESS_DB_PASSWORD: dockge
       WORDPRESS_DB_NAME: wordpress
     # Volume mapping for the application
     volumes:
@@ -31,9 +31,9 @@ services:
     # Environment variables for the database
     environment:
       MYSQL_DATABASE: wordpress
-      MYSQL_USER: casaos
-      MYSQL_PASSWORD: casaos
-      MYSQL_ROOT_PASSWORD: casaos
+      MYSQL_USER: dockge
+      MYSQL_PASSWORD: dockge
+      MYSQL_ROOT_PASSWORD: dockge
     # Volume mapping for the database
     volumes:
       - wordpress_db_data:/var/lib/mysql
