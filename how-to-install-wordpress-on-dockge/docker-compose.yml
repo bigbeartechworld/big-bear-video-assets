@@ -1,0 +1,51 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+# Service definitions for the wordpress application
+services:
+  # Service definition for the main application
+  app:
+    # Docker image to use for the application
+    image: wordpress:latest
+    # Port mapping for the application
+    ports:
+      - 8080:80
+    # Environment variables for the application
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: casaos
+      WORDPRESS_DB_PASSWORD: casaos
+      WORDPRESS_DB_NAME: wordpress
+    # Volume mapping for the application
+    volumes:
+      - wordpress_data:/var/www/html
+    # Service dependencies for the application
+    depends_on:
+      - db
+    networks:
+      - wordpress-network
+
+  # Service definition for the database
+  db:
+    # Docker image to use for the database
+    image: mysql:5.7
+    # Environment variables for the database
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: casaos
+      MYSQL_PASSWORD: casaos
+      MYSQL_ROOT_PASSWORD: casaos
+    # Volume mapping for the database
+    volumes:
+      - wordpress_db_data:/var/lib/mysql
+    networks:
+      - wordpress-network
+
+# Network definitions for the wordpress application
+networks:
+  wordpress-network:
+    driver: bridge
+
+# Volume definitions for the wordpress application
+volumes:
+  wordpress_data:
+  wordpress_db_data:
