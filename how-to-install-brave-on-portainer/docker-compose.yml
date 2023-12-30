@@ -1,0 +1,12 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+services:
+  brave:
+    container_name: big-bear-brave # Name of the Docker container
+    image: kasmweb/brave:1.14.0-rolling # Docker image for the Brave browser
+    ports:
+      - "6901:6901" # Expose port 6901 for VNC access
+    environment:
+      - VNC_PW=portainer # User: kasm_user Set the VNC password to 'portainer'
+      - LAUNCH_URL=https://community.bigbeartechworld.com/ # Set the default URL to Big Bear Tech World
+    shm_size: 512m # Allocate 512 MB of shared memory
