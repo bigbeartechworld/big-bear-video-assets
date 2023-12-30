@@ -7,6 +7,6 @@ services:
     ports:
       - "6901:6901" # Expose port 6901 for VNC access
     environment:
-      - VNC_PW=dockge # Set the VNC password to 'casaos'
+      - VNC_PW=dockge # User: kasm_user Set the VNC password to 'dockge'
       - LAUNCH_URL=https://community.bigbeartechworld.com/ # Set the default URL to Big Bear Tech World
     shm_size: 512m # Allocate 512 MB of shared memory
