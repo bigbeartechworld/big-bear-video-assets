@@ -1,0 +1,55 @@
+version: "3.8" # Docker Compose file format version
+
+# Service definitions for the big-bear-kasm application
+services:
+  # Service name: app
+  # The `app` service definition
+  kasm:
+    # Name of the container
+    container_name: big-bear-kasm
+
+    # Image to be used for the container
+    image: linuxserver/kasm:1.120.20221218
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Privilege of the container
+    privileged: true
+
+    # Uses bridge network mode
+    network_mode: bridge
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting the local kasm/opt directory to /opt inside the container
+      - kasm_opt:/opt
+
+      # Mounting the local kasm/profiles directory to /profiles inside the container
+      - kasm_profiles:/profiles
+
+      # Mounting the local /dev/input directory to /dev/input inside the container
+      - /dev/input:/dev/input
+
+      # Mounting the local /run/udev/data directory to /run/udev/data inside the container
+      - /run/udev/data:/run/udev/data
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 3000 of the host to port 3000 of the container
+      - 3000:3000/tcp
+
+      # Mapping port 443 of the host to port 443 of the container
+      - 11443:443/tcp
+
+    # Environment variables
+    environment:
+      # Tell Kasm where the port number
+      - KASM_PORT=11443
+
+volumes:
+  # Volume definitions
+  kasm_opt:
+    driver: local
+  kasm_profiles:
+    driver: local
