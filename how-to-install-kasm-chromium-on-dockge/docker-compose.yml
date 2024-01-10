@@ -1,0 +1,12 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+services:
+  chromium:
+    container_name: big-bear-chromium # Name of the Docker container
+    image: kasmweb/chromium:1.14.0-rolling # Docker image for the Chromium browser
+    ports:
+      - "6901:6901" # Expose port 6901 for VNC access
+    environment:
+      - VNC_PW=dockge # User: kasm_user Set the VNC password to 'dockge'
+      - LAUNCH_URL=https://community.bigbeartechworld.com/ # Set the default URL to Big Bear Tech World
+    shm_size: 512m # Allocate 512 MB of shared memory
