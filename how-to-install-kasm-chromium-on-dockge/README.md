@@ -1,7 +1,7 @@
 ## YouTube Video
 
-## Firefox Icon
+## Vikunja Icon
 
 ```text
-https://github.com/walkxcode/dashboard-icons/blob/main/png/firefox.png?raw=true
+https://github.com/walkxcode/dashboard-icons/blob/main/png/vikunja.png?raw=true
 ```

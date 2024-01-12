@@ -1,0 +1,76 @@
+version: "3" # Use version 3 of the docker-compose file format
+
+# Service definitions for the big-bear-vikunja application
+services:
+  # Frontend service definition
+  frontend:
+    image: vikunja/frontend:0.22.0 # Docker image to use
+    container_name: vikunja-frontend # Name of the container
+    ports:
+      - 8081:80 # Map port 8081 of the host to port 80 of the container
+    environment:
+      # Set the Vikunja API URL, replace [CHANGE_TO_YOUR_DOCKGE_IP] with the actual IP
+      VIKUNJA_API_URL: http://[CHANGE_TO_YOUR_DOCKGE_IP]:3456/api/v1
+    restart: unless-stopped # Restart policy
+    networks:
+      - vikunja-network # Network to connect to
+    depends_on:
+      - db # This service depends on the db service
+      - api # and the api service
+
+  # API service definition
+  api:
+    image: vikunja/api:0.22.0 # Docker image to use
+    container_name: vikunja-api # Name of the container
+    environment:
+      # Vikunja API environment variables
+      VIKUNJA_DATABASE_HOST: vikunja-db
+      VIKUNJA_DATABASE_PASSWORD: secret
+      VIKUNJA_DATABASE_TYPE: mysql
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_SERVICE_JWTSECRET: 4c2ad520-f177-425f-ab7f-64c5e2b1c2c8
+      # Set the Vikunja frontend URL, replace <your public frontend url with slash> with the actual URL
+      VIKUNJA_SERVICE_FRONTENDURL: http://<your public frontend url with slash>/
+    ports:
+      - 3456:3456 # Map port 3456 of the host to port 3456 of the container
+    volumes:
+      # Map container path to host path for files
+      - vikunja_files:/app/vikunja/files
+    restart: unless-stopped # Restart policy
+    networks:
+      - vikunja-network # Network to connect to
+    depends_on:
+      - db # This service depends on the db service
+
+  # Database service definition
+  db:
+    image: mariadb:10 # Docker image to use
+    container_name: vikunja-db # Name of the container
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      # MariaDB environment variables
+      MYSQL_ROOT_PASSWORD: supersecret
+      MYSQL_USER: vikunja
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: vikunja
+    volumes:
+      # Map container path to host path for MariaDB data
+      - vikunja_mysql:/var/lib/mysql
+    restart: unless-stopped # Restart policy
+    networks:
+      - vikunja-network # Network to connect to
+
+# Network definitions
+networks:
+  vikunja-network:
+    driver: bridge # Use the bridge driver
+
+# Volume definitions
+volumes:
+  vikunja_mysql:
+    driver: local # Use the local driver
+  vikunja_files:
+    driver: local # Use the local driver
