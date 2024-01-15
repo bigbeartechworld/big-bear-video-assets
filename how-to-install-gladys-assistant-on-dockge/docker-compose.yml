@@ -1,0 +1,32 @@
+# Specify the version of the Docker Compose file format.
+# This determines the available features and syntax.
+version: "3"
+
+# Service definitions for the big-bear-gladys application
+services:
+  # Service name: gladys
+  # The `gladys` service definition
+  gladys:
+    image: gladysassistant/gladys:v4.34.0 # Docker image to use for the 'app' service
+    restart: always # Container should always restart
+    privileged: true # Grants additional privileges to this container
+    network_mode: host
+    container_name: big-bear-gladys
+    cgroup: host
+    environment: # Environment variables for the container
+      NODE_ENV: production # Sets the environment to production
+      SQLITE_FILE_PATH: /var/lib/gladysassistant/gladys-production.db # Path to the SQLite database
+      TZ: Europe/Paris # Timezone
+      SERVER_PORT: "1080" # Server port for UI
+    volumes: # Mount points from the host to the container
+      - /var/run/docker.sock:/var/run/docker.sock # Docker socket file for Docker within Docker
+      - gladys_data:/var/lib/gladysassistant # Persistent storage for Gladys data
+      - /dev:/dev # Access to host devices
+      - /run/udev:/run/udev # Access to host devices
+
+# Define the volumes for the application
+volumes:
+  # Create a volume for storing Gladys data
+  gladys_data:
+    # Use the local driver for the volume
+    driver: local
