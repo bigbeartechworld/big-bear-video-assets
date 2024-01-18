@@ -1,0 +1,25 @@
+version: "3" # Docker Compose version
+
+# Service definitions for the Focalboard application
+services:
+  # The `app` service for the Focalboard application
+  app:
+    # Name of the container
+    container_name: big-bear-focalboard
+    # Docker image to be used
+    image: mattermost/focalboard:7.11.4
+    # Restart policy for the service
+    restart: unless-stopped
+    # Port mappings for the service
+    ports:
+      - "8001:8000"
+    # Volumes for the service HOST -> CONTAINER
+    volumes:
+      - focalboard_data:/opt/focalboard/data
+
+# Define named volumes for data persistence.
+volumes:
+  # Define a named volume for Focalboard data.
+  focalboard_data:
+    # Use the local storage driver.
+    driver: local
