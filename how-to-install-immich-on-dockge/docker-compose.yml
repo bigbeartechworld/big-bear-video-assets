@@ -10,11 +10,11 @@ services:
     ports: # Mapping ports from the host OS to the container
       - 2283:3001
     volumes: # Mounting directories for persistent data storage
-      - /DATA/AppData/$AppID/upload:/usr/src/app/upload
+      - immich_upload:/usr/src/app/upload
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: casaos
-      DB_PASSWORD: casaos
+      DB_USERNAME: dockge
+      DB_PASSWORD: dockge
       DB_DATABASE_NAME: immich
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
@@ -35,11 +35,11 @@ services:
     #   service: hwaccel
     command: ["start.sh", "microservices"] # Command to be executed upon container start
     volumes: # Mounting directories for persistent data storage
-      - /DATA/AppData/$AppID/upload:/usr/src/app/upload
+      - immich_upload:/usr/src/app/upload
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: casaos
-      DB_PASSWORD: casaos
+      DB_USERNAME: dockge
+      DB_PASSWORD: dockge
       DB_DATABASE_NAME: immich
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
@@ -55,12 +55,12 @@ services:
     container_name: immich-machine-learning # Name of the running container
     image: ghcr.io/immich-app/immich-machine-learning:v1.92.1 # Image to be used
     volumes: # Mounting directories for persistent data storage
-      - /DATA/AppData/$AppID/model-cache:/cache
+      - immich_cache:/cache
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: casaos
-      DB_PASSWORD: casaos
-      DB_DATABASE_NAME: casaos
+      DB_USERNAME: dockge
+      DB_PASSWORD: dockge
+      DB_DATABASE_NAME: dockge
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
     restart: always # Policy to always restart the container if it stops
@@ -80,12 +80,12 @@ services:
     container_name: immich-postgres # Name of the running container
     image: tensorchord/pgvecto-rs:pg14-v0.1.11 # Image to be used
     environment: # Setting environment variables
-      POSTGRES_PASSWORD: casaos
-      POSTGRES_USER: casaos
+      POSTGRES_PASSWORD: dockge
+      POSTGRES_USER: dockge
       POSTGRES_DB: immich
       PG_DATA: /var/lib/postgresql/data
     volumes: # Mounting directories for persistent data storage
-      - /DATA/AppData/$AppID/pgdata:/var/lib/postgresql/data
+      - immich_postgres:/var/lib/postgresql/data
     restart: always # Policy to always restart the container if it stops
     networks:
       - immich-network
@@ -96,3 +96,16 @@ networks:
   immich-network:
     # Use the bridge driver
     driver: bridge
+
+# Define named volumes for data persistence.
+volumes:
+  # Define a named volume for Immich data.
+  immich_cache:
+    # Use the local storage driver.
+    driver: local
+  immich_upload:
+    # Use the local storage driver.
+    driver: local
+  immich_postgres:
+    # Use the local storage driver.
+    driver: local
