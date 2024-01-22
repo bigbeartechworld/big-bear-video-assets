@@ -1,0 +1,36 @@
+version: "3" # Use version 3 of the docker-compose file format
+
+# Service definitions for the big-bear-home-assistant application
+services:
+  # Service name: app
+  # The `app` service definition
+  app:
+    # Name of the container
+    container_name: big-bear-home-assistant
+
+    # Image to be used for the container
+    image: ghcr.io/home-assistant/home-assistant:2024.1.4
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting the local homeassistant_config directory to /config inside the container
+      - homeassistant_config:/config
+
+      # Mounting the local /etc/localtime to /etc/localtime inside the container
+      - /etc/localtime:/etc/localtime:ro
+
+      # Mounting the local /run/dbus to /run/dbus inside the container
+      - /run/dbus:/run/dbus:ro
+
+    # Network mode for the container
+    network_mode: host
+
+# Define named volumes
+volumes:
+  # Define a named volume. Docker manages the location on the host.
+  homeassistant_config:
+    # Define a named volume. Docker manages the location on the host.
+    driver: local
