@@ -13,8 +13,8 @@ services:
       - immich_upload:/usr/src/app/upload
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: dockge
-      DB_PASSWORD: dockge
+      DB_USERNAME: portainer
+      DB_PASSWORD: portainer
       DB_DATABASE_NAME: immich
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
@@ -38,8 +38,8 @@ services:
       - immich_upload:/usr/src/app/upload
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: dockge
-      DB_PASSWORD: dockge
+      DB_USERNAME: portainer
+      DB_PASSWORD: portainer
       DB_DATABASE_NAME: immich
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
@@ -58,9 +58,9 @@ services:
       - immich_cache:/cache
     environment: # Setting environment variables
       DB_HOSTNAME: immich-postgres
-      DB_USERNAME: dockge
-      DB_PASSWORD: dockge
-      DB_DATABASE_NAME: dockge
+      DB_USERNAME: portainer
+      DB_PASSWORD: portainer
+      DB_DATABASE_NAME: portainer
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
     restart: always # Policy to always restart the container if it stops
@@ -80,8 +80,8 @@ services:
     container_name: immich-postgres # Name of the running container
     image: tensorchord/pgvecto-rs:pg14-v0.1.11 # Image to be used
     environment: # Setting environment variables
-      POSTGRES_PASSWORD: dockge
-      POSTGRES_USER: dockge
+      POSTGRES_PASSWORD: portainer
+      POSTGRES_USER: portainer
       POSTGRES_DB: immich
       PG_DATA: /var/lib/postgresql/data
     volumes: # Mounting directories for persistent data storage
