@@ -1,6 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ]
+  "extends": ["config:base"],
+  "stabilityDays": 3,
+  "packageRules": [
+    {
+      "matchDatasources": "docker",
+      "matchPackagePatterns": ["^guacamole/"],
+      "groupName": "guacamole docker images"
+    },
+    {
+      "matchDatasources": "docker",
+      "matchPackagePatterns": ["^vikunja/"],
+      "groupName": "vikunja docker images"
+    },
+    {
+      "matchDatasources": "docker",
+      "matchPackagePatterns": ["^ghcr\\.io/immich-app/"],
+      "groupName": "immich docker images"
+    },
+    {
+      "matchDatasources": "docker",
+      "matchPackagePatterns": [
+        "^([^\\/]+\\/)?(mysql|mariadb|mongodb|mongo|postgres|redis)(:|$)"
+      ],
+      "enabled": false
+    }
+  ],
+  "regexManagers": []
 }
