@@ -60,7 +60,7 @@ services:
       DB_HOSTNAME: immich-postgres
       DB_USERNAME: dockge
       DB_PASSWORD: dockge
-      DB_DATABASE_NAME: dockge
+      DB_DATABASE_NAME: immich
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
     restart: always # Policy to always restart the container if it stops
