@@ -21,7 +21,7 @@ services:
 
     # Ports mapping between host and container
     ports:
-      # Mapping port 7575 of the host to port 9000 of the container
+      # Mapping port 9925 of the host to port 9000 of the container
       - "9925:9000"
 
 # Volumes
