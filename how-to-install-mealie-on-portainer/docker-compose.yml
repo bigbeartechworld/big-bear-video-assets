@@ -1,0 +1,30 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+# Service definitions for the big-bear-mealie application
+services:
+  # Service name: app
+  # The `app` service definition
+  app:
+    # Name of the container
+    container_name: big-bear-mealie
+
+    # Image to be used for the container
+    image: hkotel/mealie:v1.0.0
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting the local /app/data directory to /DATA/AppData/$AppID/data inside the container
+      - mealie_data:/app/data
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 9925 of the host to port 9000 of the container
+      - "9925:9000"
+
+# Volumes
+volumes:
+  # Define a named volume for data persistence
+  mealie_data:
