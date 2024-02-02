@@ -1,0 +1,72 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+# Service definitions for the big-bear-linkwarden application
+services:
+  # Service name: linkwarden
+  # The `linkwarden` service definition
+  linkwarden:
+    # Name of the container
+    container_name: big-bear-linkwarden
+
+    # Image to be used for the container
+    image: ghcr.io/linkwarden/linkwarden:v2.4.9
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      - linkwarden_data:/data/data
+
+    # Environment variables
+    environment:
+      - DATABASE_URL=postgresql://dockge:dockgepassword@big-bear-linkwarden-db:5432/big-bear-linkwarden
+      - NEXTAUTH_SECRET=7e2d8797-dc20-422a-9a68-44b958bd33c0
+      - NEXTAUTH_URL=http://localhost/api/v1/auth
+      - NEXT_PUBLIC_DISABLE_REGISTRATION=
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 3000 of the host to port 3000 of the container
+      - "3000:3000"
+
+    # Networks to be attached to the container
+    networks:
+      - linkwarden_network
+
+  # Postgres database
+  linkwarden-db:
+    # Name of the container
+    container_name: big-bear-linkwarden-db
+    # Image to be used
+    image: postgres
+    # Container restart policy
+    restart: unless-stopped
+    # Environment variables
+    environment:
+      - POSTGRES_USER=dockge
+      - POSTGRES_PASSWORD=dockgepassword
+      - POSTGRES_DB=big-bear-linkwarden
+    # Volumes to be mounted
+    volumes:
+      - linkwarden_db:/var/lib/postgresql/data
+    # Networks to be attached
+    networks:
+      - linkwarden_network
+
+# Networks to be created
+networks:
+  # Network name
+  linkwarden_network:
+    # Set the driver to bridge
+    driver: bridge
+
+# Volumes to be created
+volumes:
+  # Volume name
+  linkwarden_data:
+    # Use the local storage driver
+    driver: local
+  linkwarden_db:
+    # Use the local storage driver
+    driver: local
