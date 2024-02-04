@@ -1,0 +1,15 @@
+version: "3.8" # Specifies the version of the Docker Compose file format
+
+services:
+  big-bear-port_monitor: # Defines a service named "port_monitor"
+    container_name: big-bear-port-monitor
+    image: alpine # Uses the Alpine Linux image as the base image
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Mounts the Docker socket to allow Docker commands to be run inside the container
+    command: [
+        "/bin/sh",
+        "-c",
+        "apk add --no-cache docker-cli && while true; do docker ps --format '{{.Names}}: {{.Ports}}'; sleep 60; done",
+        # Installs the Docker CLI without caching the package, then runs a loop to list container names and their ports every 60 seconds
+      ]
+    restart: always # Ensures the container always restarts unless manually stopped
