@@ -4,7 +4,7 @@ version: "3" # Use version 3 of the docker-compose file format
 services:
   # Frontend service definition
   frontend:
-    image: vikunja/frontend:0.22.0 # Docker image to use
+    image: vikunja/frontend:0.22.1 # Docker image to use
     container_name: vikunja-frontend # Name of the container
     ports:
       - 8081:80 # Map port 8081 of the host to port 80 of the container
@@ -20,7 +20,7 @@ services:
 
   # API service definition
   api:
-    image: vikunja/api:0.22.0 # Docker image to use
+    image: vikunja/api:0.22.1 # Docker image to use
     container_name: vikunja-api # Name of the container
     environment:
       # Vikunja API environment variables
