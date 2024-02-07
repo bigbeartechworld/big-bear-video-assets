@@ -1,0 +1,29 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+# Service definitions for the big-bear-trilium application
+services:
+  # Service name: trilium
+  # The `trilium` service definition
+  trilium:
+    # Name of the container
+    container_name: big-bear-trilium
+
+    # Image to be used for the container
+    image: zadam/trilium:0.62.6
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Environment variables
+    environment:
+      - TRILIUM_DATA_DIR=/home/node/trilium-data
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting the local trilium_data directory to /home/node/trilium-data inside the container
+      - trilium_data:/home/node/trilium-data
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 8080 of the host to port 8080 of the container
+      - "8080:8080"
