@@ -27,3 +27,10 @@ services:
     ports:
       # Mapping port 8080 of the host to port 8080 of the container
       - "8080:8080"
+
+# Volumes
+volumes:
+  # Define a named volume for data persistence
+  trilium_data:
+    # Use the local storage driver
+    driver: local
