@@ -1,0 +1,35 @@
+# Specifies the version of the Docker Compose file format
+version: "3"
+
+# Service definitions for the application
+services:
+  # Service name: ferdium
+  ferdium:
+    # The Docker image to use for the ferdium service
+    image: lscr.io/linuxserver/ferdium:latest
+    # Custom container name for easy referencing
+    container_name: ferdium
+    # Security options for the container (optional)
+    security_opt:
+      - seccomp:unconfined # Disables kernel secure computing mode, which can be needed for certain applications but reduces security
+    # Environment variables to configure the service
+    environment:
+      - PUID=1000 # User ID for the process
+      - PGID=1000 # Group ID for the process
+      - TZ=Etc/UTC # Timezone setting for the service
+    # Volume mappings. Persist data and configuration between container restarts
+    volumes:
+      - ferdium_config:/config # Maps host volume 'ferdium_config' to container path '/config'
+    # Port mappings. Expose container ports to the host
+    ports:
+      - 3000:3000 # Maps host port 3000 to container port 3000
+      - 3001:3001 # Maps host port 3001 to container port 3001
+    # Shared memory size. Some applications need more than the default size
+    shm_size: "1gb" # Allocates 1GB of shared memory
+    # Restart policy. Defines under what conditions the service should be restarted
+    restart: unless-stopped # Restart the service unless it was explicitly stopped
+
+# Volume definitions for the services
+volumes:
+  ferdium_config:
+    driver: local # Specifies that the volume should be stored locally on the host
