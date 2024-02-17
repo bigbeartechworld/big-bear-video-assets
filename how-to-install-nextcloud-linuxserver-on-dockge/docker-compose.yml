@@ -12,7 +12,7 @@ services: # Defines the services that make up your application in the docker-com
       - nextcloud_config:/config # Mounts a named volume 'nextcloud_config' to '/config' inside the container for storing configuration files.
       - nextcloud_data:/data # Mounts a named volume 'nextcloud_data' to '/data' inside the container for storing user data.
     ports: # Maps ports between the container and the host, allowing network traffic to reach the service.
-      - 443:443 # Maps TCP port 443 on the host to TCP port 443 in the container, typically used for HTTPS traffic.
+      - 7580:443 # Maps TCP port 7580 on the host to TCP port 443 in the container, typically used for HTTPS traffic.
     restart: unless-stopped # Determines the restart behavior of the container. This policy restarts the container unless it has been explicitly stopped.
 
 volumes: # Declares named volumes that can be used by services. Named volumes are managed by Docker and persist data independently of containers.
