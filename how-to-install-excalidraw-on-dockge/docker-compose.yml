@@ -1,0 +1,15 @@
+version: "3" # This specifies the version of the Docker Compose file format being used
+
+# Services used in the application
+services:
+  # The `app` service for the excalidraw application
+  app:
+    # Name of the container
+    container_name: big-bear-excalidraw
+    # Docker image to be used
+    image: excalidraw/excalidraw
+    # Restart policy for the service
+    restart: unless-stopped
+    # Port mappings for the service
+    ports:
+      - "8000:80"
