@@ -1,0 +1,22 @@
+version: "3" # Specifies the version of the Docker Compose file format. Version 3 introduces new features and is compatible with Docker Engine version 1.13.0 and later.
+
+services: # Defines the services that make up your application in the docker-compose.yml file. Each service is created from a Docker image.
+  big-bear-nextcloud: # This is the name of the service, which is a custom identifier used within the Docker Compose file.
+    image: linuxserver/nextcloud:28.0.2 # Specifies the Docker image to be used for this service, including its version tag.
+    container_name: big-bear-nextcloud # Sets a custom name for the container that's created from this service. Useful for referencing the container on the Docker host.
+    environment: # Sets environment variables for the container. These are key-value pairs that can affect the behavior of your application.
+      - PUID=1000 # User ID to run the application as. Helps with file permissions outside the container.
+      - PGID=1000 # Group ID to run the application as. Also helps with managing file permissions.
+      - TZ=Etc/UTC # Sets the timezone for the container, useful for logs, scheduling, etc.
+    volumes: # Mounts persistent storage volumes to the container, allowing data to persist across container restarts and rebuilds.
+      - nextcloud_config:/config # Mounts a named volume 'nextcloud_config' to '/config' inside the container for storing configuration files.
+      - nextcloud_data:/data # Mounts a named volume 'nextcloud_data' to '/data' inside the container for storing user data.
+    ports: # Maps ports between the container and the host, allowing network traffic to reach the service.
+      - 443:443 # Maps TCP port 443 on the host to TCP port 443 in the container, typically used for HTTPS traffic.
+    restart: unless-stopped # Determines the restart behavior of the container. This policy restarts the container unless it has been explicitly stopped.
+
+volumes: # Declares named volumes that can be used by services. Named volumes are managed by Docker and persist data independently of containers.
+  nextcloud_config: # This named volume is used for storing Nextcloud configuration files.
+    driver: local # Specifies that the Docker engine's local volume driver is used for managing the volume.
+  nextcloud_data: # This named volume is used for storing Nextcloud data, such as user files and database files.
+    driver: local # Specifies the use of the Docker engine's local volume driver for this volume.
