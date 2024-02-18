@@ -3,7 +3,7 @@ version: "3" # Specifies the version of the Docker Compose file format
 services:
   chromium:
     container_name: big-bear-chromium # Name of the Docker container
-    image: kasmweb/chromium:1.14.0-rolling # Docker image for the Chromium browser
+    image: kasmweb/chromium:1.15.0-rolling # Docker image for the Chromium browser
     ports:
       - "6901:6901" # Expose port 6901 for VNC access
     environment:
