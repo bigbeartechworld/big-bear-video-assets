@@ -1,0 +1,46 @@
+version: "3" # Specifies the version of the Docker Compose file format. Version 3 introduces new features and is compatible with Docker Engine version 1.13.0 and later.
+
+services:
+  # Defines the Nextcloud service
+  big-bear-nextcloud:
+    image: linuxserver/nextcloud:28.0.2 # Docker image with specific version for the Nextcloud service.
+    container_name: big-bear-nextcloud # Custom container name for easy reference.
+    environment:
+      - PUID=1000 # User ID for file permission management outside the container.
+      - PGID=1000 # Group ID for file permission management.
+      - TZ=Etc/UTC # Timezone setting for the container.
+    volumes:
+      - nextcloud_config:/config # Volume for Nextcloud configuration files.
+      - nextcloud_data:/data # Volume for Nextcloud data (e.g., user files).
+    ports:
+      - 7580:443 # Maps TCP port 7580 on the host to port 443 in the container for HTTPS.
+    restart: unless-stopped # Restart policy: restart unless manually stopped.
+    networks:
+      - nextcloud_network # Attaches the container to the 'nextcloud_network' network.
+
+  # Defines the database service for Nextcloud
+  big-bear-nextcloud-db:
+    container_name: big-bear-nextcloud-db # Custom container name for the database.
+    image: mariadb:10 # Docker image for MariaDB database, version 8.
+    restart: on-failure # Restart policy: restart on failure conditions.
+    volumes:
+      - nextcloud_mariadb_data:/var/lib/mysql # Volume for MariaDB data, ensuring data persistence.
+    environment:
+      - MARIADB_ROOT_PASSWORD=dockge # MariaDB root password.
+      - MARIADB_DATABASE=nextcloud # Database name dedicated to Nextcloud.
+      - MARIADB_USER=dockge # MariaDB user.
+      - MARIADB_PASSWORD=dockge # MariaDB password.
+    networks:
+      - nextcloud_network # Connects the database container to the same network as Nextcloud.
+
+networks:
+  nextcloud_network: # Custom network for facilitating communication between services.
+    driver: bridge # Network type: bridge. Isolates containers in the same bridge network, allowing them to communicate.
+
+volumes:
+  nextcloud_config: # Named volume for Nextcloud configuration files.
+    driver: local # Managed by Docker's local volume driver.
+  nextcloud_data: # Named volume for Nextcloud user data.
+    driver: local # Managed by Docker's local volume driver.
+  nextcloud_mariadb_data: # Named volume for MariaDB data, ensuring database persistence.
+    driver: local # Managed by Docker's local volume driver.
