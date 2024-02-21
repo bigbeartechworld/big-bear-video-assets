@@ -23,6 +23,8 @@ services: # Defines the services that make up the application
       - "speedtest_tracker_config:/config" # Volume for storing configuration files
       - "speedtest_tracker_web:/etc/ssl/web" # Volume for storing SSL certificates or web-related files
     restart: unless-stopped # Container restart policy: restart if the container stops unexpectedly
+    networks:
+      - big_bear_speedtest_tracker_network # Attaches the container to the big_bear_speedtest_tracker_network network
     depends_on: # Dependency setting, indicating that this service depends on the db service
       - big-bear-speedtest-tracker-db # Ensures db service is started before speedtest-tracker
 
@@ -36,6 +38,8 @@ services: # Defines the services that make up the application
       - MARIADB_USER=dockge # Username for the database, used by speedtest-tracker
       - MARIADB_PASSWORD=dockge # Password for the database user
       - MARIADB_RANDOM_ROOT_PASSWORD=true # Enables random password generation for the root user for security
+    networks:
+      - big_bear_speedtest_tracker_network # Attaches the container to the big_bear_speedtest_tracker_network network
     volumes: # Mount for database storage, ensuring data persists across container restarts and removal
       - speedtest_tracker_db:/var/lib/mysql # Maps the host directory to the container's database storage location
 
