@@ -1,0 +1,19 @@
+version: "3" # This specifies the version of the Docker Compose file format being used. Version "3" supports Docker 1.13.0 and above.
+
+# Services used in the application
+services:
+  # The `app` service for the drawio application
+  app:
+    # Name of the container. This is a custom name assigned to the container, making it easier to identify and manage.
+    container_name: big-bear-drawio
+    # Docker image to be used. Specifies the draw.io Docker image and its version. This image is pulled from Docker Hub or another container registry if not available locally.
+    image: jgraph/drawio:22.1.22
+    # Restart policy for the service. This configuration ensures that the container restarts automatically unless it is explicitly stopped by the user. Helps in maintaining the application's availability.
+    restart: unless-stopped
+    # Port mappings for the service. This maps port 8080 of the container to port 8080 of the host, allowing external access to the draw.io application through the host's IP address and port.
+    ports:
+      - "8080:8080"
+    # Enables TTY (teletypewriter) for the container. This is often used for debugging purposes and can be helpful when attaching to a container's console.
+    tty: true
+    # Keeps stdin open even if no attached client is present. This can be useful for interactive applications or for containers that you may want to interact with directly.
+    stdin_open: true
