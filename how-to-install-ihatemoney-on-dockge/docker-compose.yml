@@ -19,12 +19,12 @@ services:
   # Define a service named 'big-bear-ihatemoney-db' for the database.
   big-bear-ihatemoney-db:
     image: mariadb:10 # Use MariaDB version 10 Docker image.
-    container_name: big-bear-ihatemoney-mysql # Custom container name.
+    container_name: big-bear-ihatemoney-db # Custom container name.
     environment:
-      MYSQL_ROOT_PASSWORD: password # Root password for MySQL.
+      MYSQL_ROOT_PASSWORD: password # Root password for MariaDB.
       MYSQL_DATABASE: ihatemoney # Default database name.
-      MYSQL_USER: bigbear # Username for MySQL.
-      MYSQL_PASSWORD: password # Password for the MySQL user.
+      MYSQL_USER: bigbear # Username for MariaDB.
+      MYSQL_PASSWORD: password # Password for the MariaDB user.
     ports:
       - "3306:3306" # Maps MySQL port 3306 inside the container to port 3306 on the host.
     volumes:
