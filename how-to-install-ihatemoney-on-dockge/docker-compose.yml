@@ -1,0 +1,41 @@
+version: "3.8" # Specifies the version of the Docker Compose file format.
+
+services:
+  big-bear-ihatemoney:
+    container_name: big-bear-ihatemoney # Sets a custom container name.
+    image: ihatemoney/ihatemoney:6.1.4 # Specifies the Docker image and version to use.
+    ports:
+      - "8001:8000" # Maps port 8001 of the container to port 8000 on the host.
+    environment:
+      SECRET_KEY: "1d58bc34-e7ff-4f6d-a1e4-f319262ed9b8" # Sets the secret key environment variable for the application.
+      SQLALCHEMY_DATABASE_URI: "mysql+pymysql://bigbear:password@big-bear-ihatemoney-db/ihatemoney" # Database connection string.
+      ACTIVATE_ADMIN_DASHBOARD: "True" # Enables the admin dashboard.
+      ADMIN_PASSWORD: "" # Sets the admin password. On the host run: docker run -it --rm --entrypoint ihatemoney ihatemoney/ihatemoney generate_password_hash
+      SESSION_COOKIE_SECURE: "False" # Disables secure session cookies for development.
+    restart: unless-stopped # Container restart policy.
+    networks:
+      - big_bear_ihatemoney_network # Connects the service to a network.
+
+  # Define a service named 'big-bear-ihatemoney-db' for the database.
+  big-bear-ihatemoney-db:
+    image: mariadb:10 # Use MariaDB version 10 Docker image.
+    container_name: big-bear-ihatemoney-mysql # Custom container name.
+    environment:
+      MYSQL_ROOT_PASSWORD: password # Root password for MySQL.
+      MYSQL_DATABASE: ihatemoney # Default database name.
+      MYSQL_USER: bigbear # Username for MySQL.
+      MYSQL_PASSWORD: password # Password for the MySQL user.
+    ports:
+      - "3306:3306" # Maps MySQL port 3306 inside the container to port 3306 on the host.
+    volumes:
+      - big_bear_mysql_data:/var/lib/mysql # Maps a volume for data persistence.
+    networks:
+      - big_bear_ihatemoney_network # Connects the MySQL service to the network.
+
+networks:
+  big_bear_ihatemoney_network:
+    driver: bridge # Defines the network with the bridge driver.
+
+volumes:
+  big_bear_mysql_data:
+    driver: local # Specifies the volume driver as local for data persistence.
