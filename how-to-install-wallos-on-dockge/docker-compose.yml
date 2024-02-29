@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+  big-bear-wallos:
+    container_name: big-bear-wallos
+    image: bellamy/wallos:latest
+    ports:
+      - "8282:80"
+    environment:
+      TZ: "UTC"
+    # Volumes store your data between container upgrades
+    volumes:
+      - "big_bear_wallos_db:/var/www/html/db"
+      - "big_bear_wallos_logos:/var/www/html/images/uploads/logos"
+    restart: unless-stopped
+
+volumes:
+  big_bear_wallos_db:
+    driver: local
+  big_bear_wallos_logos:
+    driver: local
