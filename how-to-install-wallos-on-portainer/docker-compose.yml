@@ -1,0 +1,21 @@
+version: "3.0" # Specifies the Docker Compose file format version.
+
+services:
+  big-bear-wallos:
+    container_name: big-bear-wallos # Sets a custom name for the container.
+    image: bellamy/wallos:1.10.0 # Specifies the Docker image to use for the service.
+    ports:
+      - "8282:80" # Maps port 80 inside the container to port 8282 on the host.
+    environment:
+      TZ: "UTC" # Sets the time zone inside the container to Coordinated Universal Time (UTC).
+    # Volumes store your data between container upgrades
+    volumes:
+      - "big_bear_wallos_db:/var/www/html/db" # Mounts a volume for the database, persisting data.
+      - "big_bear_wallos_logos:/var/www/html/images/uploads/logos" # Mounts a volume for logos, ensuring data persistence.
+    restart: unless-stopped # Configures the container to restart automatically unless it is explicitly stopped.
+
+volumes:
+  big_bear_wallos_db:
+    driver: local # Specifies the use of the local volume driver for the database volume.
+  big_bear_wallos_logos:
+    driver: local # Specifies the use of the local volume driver for the logos volume.
