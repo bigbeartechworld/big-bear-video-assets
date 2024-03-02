@@ -1,0 +1,32 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+services:
+  big_bear_libretranslate:
+    container_name: big_bear_libretranslate # Names the container for easier identification
+    image: libretranslate/libretranslate:v1.5.5 # Specifies the Docker image and version to use
+    restart: unless-stopped # Container restart policy
+    ports:
+      - "5000:5000" # Maps port 5000 of the container to port 5000 on the host
+    tty: true # Allocates a pseudo-TTY, useful for logging
+    healthcheck: # Defines a health check for the container
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"] # Command to check health
+    environment:
+      - LT_API_KEYS=true # Enables API key authentication
+      - LT_API_KEYS_DB_PATH=/app/db/api_keys.db # Specifies the path for storing API keys
+      - LT_UPDATE_MODELS=true # Enables model updates on startup
+      - LT_LOAD_ONLY=en,fr,es,de,it,pt,ru,ja,zh # Restricts loaded languages to these codes
+    volumes:
+      - big_bear_libretranslate_api_keys:/app/db # Mounts a volume for API keys persistence
+      - big_bear_libretranslate_models:/home/libretranslate/.local:rw # Mounts a volume for model storage
+    networks:
+      - big_bear_libretranslate # Connects the container to a custom network
+
+volumes:
+  big_bear_libretranslate_api_keys: # Declares a volume for API keys
+    driver: local # Uses the local volume driver
+  big_bear_libretranslate_models: # Declares a volume for model data
+    driver: local # Uses the local volume driver
+
+networks:
+  big_bear_libretranslate: # Defines a custom network
+    driver: bridge # Uses the bridge driver for Docker networking
