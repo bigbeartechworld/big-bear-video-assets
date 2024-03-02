@@ -1,7 +1,5 @@
 ## YouTube Video
 
-## Wallos Icon
+## About
 
-```text
-https://github.com/walkxcode/dashboard-icons/blob/main/png/libretranslate.png?raw=true
-```
+Free and Open Source Machine Translation API. Self-hosted, offline capable and easy to setup.
