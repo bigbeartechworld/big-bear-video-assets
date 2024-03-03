@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  big_bear_libretranslate:
+    container_name: big_bear_libretranslate
+    image: libretranslate/libretranslate:v1.5.5
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    # Uncomment this for logging in docker compose logs
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
+    ## Uncomment this section and the libretranslate_api_keys volume if you want to backup your API keys
+    environment:
+      - LT_API_KEYS=true
+      - LT_API_KEYS_DB_PATH=/app/db/api_keys.db # Same result as `db/api_keys.db` or `./db/api_keys.db`
+      # Uncomment these vars and libretranslate_models volume to optimize loading time.
+      - LT_UPDATE_MODELS=true
+      - LT_LOAD_ONLY=en,fr,es,de,it,pt,ru,ja,zh
+    volumes:
+      - big_bear_libretranslate_api_keys:/app/db
+      # Keep the models in a docker volume, to avoid re-downloading on startup
+      - big_bear_libretranslate_models:/home/libretranslate/.local:rw
+    networks:
+      - big_bear_libretranslate
+
+volumes:
+  big_bear_libretranslate_api_keys:
+    driver: local
+  big_bear_libretranslate_models:
+    driver: local
+
+networks:
+  big_bear_libretranslate:
+    driver: bridge
