@@ -1,36 +1,34 @@
-version: "3"
+version: "3" # Specifies the version of the Docker Compose file format. This version supports most of the features available in Docker Compose.
 
 services:
   big_bear_libretranslate:
-    container_name: big_bear_libretranslate
-    image: libretranslate/libretranslate:v1.5.5
-    restart: unless-stopped
+    container_name: big_bear_libretranslate # Gives the container a custom name for easier identification in Docker commands and logs.
+    image: libretranslate/libretranslate:v1.5.5 # Specifies the Docker image and version to use for this service.
+    restart: unless-stopped # Sets the restart policy to always restart the container unless it was manually stopped.
     ports:
-      - "5000:5000"
-    # Uncomment this for logging in docker compose logs
-    tty: true
-    healthcheck:
+      - "5000:5000" # Maps port 5000 of the container to port 5000 on the host, allowing external access to the service.
+    tty: true # Allocates a pseudo-TTY, which can be useful for interactive applications and logging.
+    healthcheck: # Defines a health check for the container to ensure it's running correctly.
+      # This command is run within the container to check its health.
+      # If the command exits with a 0 status, the service is considered healthy. Any other exit status indicates an unhealthy service.
       test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
-    ## Uncomment this section and the libretranslate_api_keys volume if you want to backup your API keys
     environment:
-      - LT_API_KEYS=true
-      - LT_API_KEYS_DB_PATH=/app/db/api_keys.db # Same result as `db/api_keys.db` or `./db/api_keys.db`
-      # Uncomment these vars and libretranslate_models volume to optimize loading time.
-      - LT_UPDATE_MODELS=true
-      - LT_LOAD_ONLY=en,fr,es,de,it,pt,ru,ja,zh
+      - LT_API_KEYS=true # Enables API key authentication for the LibreTranslate service.
+      - LT_API_KEYS_DB_PATH=/app/db/api_keys.db # Specifies the path within the container where API keys are stored.
+      - LT_UPDATE_MODELS=true # Allows the LibreTranslate service to update its translation models on startup.
+      - LT_LOAD_ONLY=en,fr,es,de,it,pt,ru,ja,zh # Restricts the languages loaded by LibreTranslate to these language codes.
     volumes:
-      - big_bear_libretranslate_api_keys:/app/db
-      # Keep the models in a docker volume, to avoid re-downloading on startup
-      - big_bear_libretranslate_models:/home/libretranslate/.local:rw
+      - big_bear_libretranslate_api_keys:/app/db # Mounts a volume at /app/db within the container for persistent API key storage.
+      - big_bear_libretranslate_models:/home/libretranslate/.local:rw # Mounts a volume for storing and updating translation models.
     networks:
-      - big_bear_libretranslate
+      - big_bear_libretranslate_network # Connects the container to a custom network, allowing it to communicate with other containers on the same network.
 
 volumes:
-  big_bear_libretranslate_api_keys:
-    driver: local
-  big_bear_libretranslate_models:
-    driver: local
+  big_bear_libretranslate_api_keys: # Declares a volume for persistent API key storage.
+    driver: local # Uses the local volume driver, storing data on the host machine.
+  big_bear_libretranslate_models: # Declares a volume for storing translation models.
+    driver: local # Uses the local volume driver, storing data on the host machine.
 
 networks:
-  big_bear_libretranslate:
-    driver: bridge
+  big_bear_libretranslate_network: # Defines a custom network for inter-container communication.
+    driver: bridge # Uses the bridge driver, creating a private network on the host machine for the containers.
