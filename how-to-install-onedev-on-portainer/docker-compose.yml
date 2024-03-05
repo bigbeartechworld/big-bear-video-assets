@@ -1,0 +1,55 @@
+version: "3.7" # Docker Compose file version
+
+# Define the services for the OneDev application server and the PostgreSQL database
+services:
+  # Define the service for the OneDev application server
+  big-bear-onedev:
+    image: 1dev/server:10.3.0 # Use the specified OneDev server image
+    container_name: big-bear-onedev # Container name for easy reference
+    environment: # Environment variables for configuration
+      - hibernate_dialect=io.onedev.server.persistence.PostgreSQLDialect # Specify the Hibernate dialect for PostgreSQL
+      - hibernate_connection_driver_class=org.postgresql.Driver # JDBC driver class for PostgreSQL
+      - hibernate_connection_url=jdbc:postgresql://big-bear-onedev-db:5432/onedev # JDBC connection URL, pointing to the PostgreSQL service
+      - hibernate_connection_username=bigbear # Username for the database connection
+      - hibernate_connection_password=eea2dad6-2203-45eb-8908-e8ba4d1e7f92 # Password for the database connection
+      - initial_user=bigbear # Initial admin username for OneDev
+      - initial_password=password # Initial admin password for OneDev
+      - initial_email=admin@example.com # Initial admin email for OneDev
+      - initial_server_url=http://localhost:6610 # URL where OneDev will be accessible
+    restart: unless-stopped # Policy to restart the container unless stopped manually
+    volumes: # Mount points for data persistence and Docker socket for Docker operations within OneDev
+      - big_bear_onedev_data:/opt/onedev # Persistent storage for OneDev data
+      - /var/run/docker.sock:/var/run/docker.sock # Mount the host's Docker socket in the container
+    ports: # Ports that OneDev will use
+      - 6610:6610 # Main web interface
+      - 6611:6611 # Secondary or internal port, if needed
+    depends_on: # Ensure the database service starts before this service
+      - big-bear-onedev-db
+    networks: # Connect to the network
+      - big_bear_ondedev_network
+
+  # Define the service for the PostgreSQL database
+  big-bear-onedev-db:
+    container_name: big-bear-onedev-db # Container name for easy reference
+    image: postgres:14 # Use the specified PostgreSQL image
+    restart: unless-stopped # Policy to restart the container unless stopped manually
+    environment: # Environment variables for PostgreSQL configuration
+      - POSTGRES_USER=bigbear # Default username for PostgreSQL
+      - POSTGRES_PASSWORD=eea2dad6-2203-45eb-8908-e8ba4d1e7f92 # Password for the default user
+      - POSTGRES_DB=onedev # Default database created upon startup
+    volumes: # Mount point for database persistence
+      - big_bear_ondev_postgres:/var/lib/postgresql/data
+    networks: # Connect to the network
+      - big_bear_ondedev_network
+
+# Define the custom network for inter-service communication
+networks:
+  big_bear_ondedev_network: # Define a custom network for inter-service communication
+    driver: bridge
+
+# Define the persistent storage for OneDev and PostgreSQL
+volumes:
+  big_bear_onedev_data: # Define persistent storage for OneDev
+    driver: local
+  big_bear_ondev_postgres: # Define persistent storage for PostgreSQL
+    driver: local
