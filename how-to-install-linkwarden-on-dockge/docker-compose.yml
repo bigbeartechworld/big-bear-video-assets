@@ -9,7 +9,7 @@ services:
     container_name: big-bear-linkwarden
 
     # Image to be used for the container
-    image: ghcr.io/linkwarden/linkwarden:v2.4.9
+    image: ghcr.io/linkwarden/linkwarden:v2.5.1
 
     # Container restart policy
     restart: unless-stopped
