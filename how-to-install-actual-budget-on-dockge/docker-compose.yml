@@ -1,0 +1,18 @@
+version: "3.8" # Docker Compose file format version
+
+# Service definitions for the big-bear-actual-server application
+services:
+  # Service name: big-bear-actual-server
+  big-bear-actual-server:
+    image: actualbudget/actual-server:24.3.0 # The Docker image to use (latest version of actual-server)
+    container_name: actual-server # Name of the container instance
+    volumes:
+      - actual_budget_data:/data # Mounting the project directory inside the container
+    ports:
+      - "5006:5006" # Expose actual-server's port 5006 on the host's port 5006
+    restart: unless-stopped # Policy to restart the container if it stops unexpectedly
+
+# Volume definition for the big-bear-actual-server application
+volumes:
+  actual_budget_data: # Name of the volume
+    driver: local # Use the local volume driver
