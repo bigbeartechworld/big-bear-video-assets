@@ -9,7 +9,7 @@ services:
     container_name: big-bear-home-assistant
 
     # Image to be used for the container
-    image: ghcr.io/home-assistant/home-assistant:2024.3.1
+    image: ghcr.io/home-assistant/home-assistant:2024.4.1
 
     # Container restart policy
     restart: unless-stopped
