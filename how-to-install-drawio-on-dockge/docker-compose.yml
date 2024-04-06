@@ -7,7 +7,7 @@ services:
     # Name of the container. This is a custom name assigned to the container, making it easier to identify and manage.
     container_name: big-bear-drawio
     # Docker image to be used. Specifies the draw.io Docker image and its version. This image is pulled from Docker Hub or another container registry if not available locally.
-    image: jgraph/drawio:24.0.7
+    image: jgraph/drawio:24.2.2
     # Restart policy for the service. This configuration ensures that the container restarts automatically unless it is explicitly stopped by the user. Helps in maintaining the application's availability.
     restart: unless-stopped
     # Port mappings for the service. This maps port 8080 of the container to port 8080 of the host, allowing external access to the draw.io application through the host's IP address and port.
