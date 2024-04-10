@@ -1,0 +1,78 @@
+version: "3.8" # Docker Compose file format version
+
+# Service definitions for the big-bear-tandoor application
+services:
+  # Service name: big-bear-tandoor
+  # The `big-bear-tandoor` service definition
+  big-bear-tandoor:
+    # Name of the container
+    container_name: big-bear-tandoor
+
+    # Image to be used for the container
+    image: ghcr.io/tandoorrecipes/recipes:1.5.17
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      - big_bear_tandoor_staticfiles:/opt/recipes/staticfiles
+      - big_bear_tandoor_mediafiles:/opt/recipes/mediafiles
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 8080 of the host to port 8080 of the container
+      - "8080:8080"
+
+    # Environment variables to be passed to the container
+    environment:
+      - SECRET_KEY=6496f725-e4a4-4fa5-9f7b-db0114bc1568
+      - DB_ENGINE=django.db.backends.postgresql
+      - POSTGRES_HOST=big-bear-tandoor-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=tandoor
+      - POSTGRES_PASSWORD=100c7d31-9ec5-44ec-9101-e226c8e2420d
+      - POSTGRES_DB=tandoordb
+
+    # Network to be used by the container
+    networks:
+      - big_bear_tandoor_network
+
+    # Healthcheck configuration for the container
+    depends_on:
+      big-bear-tandoor-db:
+        condition: service_healthy
+
+  big-bear-tandoor-db:
+    image: postgres:15-alpine
+    container_name: big-bear-tandoor-db
+    volumes:
+      - big_bear_tandoor_postgresql_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=tandoor
+      - POSTGRES_PASSWORD=100c7d31-9ec5-44ec-9101-e226c8e2420d
+      - POSTGRES_DB=tandoordb
+    restart: unless-stopped
+    networks:
+      - big_bear_tandoor_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "tandoor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+# Network definitions for the big-bear-tandoor application
+networks:
+  big_bear_tandoor_network:
+    driver: bridge
+
+# Volume definitions for the big-bear-tandoor application
+volumes:
+  big_bear_tandoor_staticfiles:
+    driver: local
+  big_bear_tandoor_mediafiles:
+    driver: local
+  big_bear_tandoor_postgresql_data:
+    driver: local
