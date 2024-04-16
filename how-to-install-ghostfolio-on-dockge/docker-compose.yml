@@ -1,0 +1,80 @@
+version: "3.7" # Specifies the version of the Docker Compose file format
+
+# This section defines all the services that make up the application stack for Ghostfolio.
+services:
+  # Main application service configuration for Ghostfolio
+  big-bear-ghostfolio:
+    container_name: big-bear-ghostfolio # Unique identifier for this container to distinguish it from others
+    image: ghostfolio/ghostfolio:2.72.0 # Specifies the Docker image version to use
+    restart: unless-stopped # Policy that determines the restart behavior, here set to only stop manually
+    environment: # Environment variables are key-value pairs that configure the application
+      NODE_ENV: production # Sets the mode of Node.js environment indicating production mode
+      HOST: "0.0.0.0" # Allows the server to be accessible externally by binding to all network interfaces
+      PORT: "3333" # Designates the network port the application listens on
+      ACCESS_TOKEN_SALT: 5a7f9e0d-0e64-4c19-8279-bbe8b4c590f4 # Provides a unique salt for secure token generation
+      DATABASE_URL: postgresql://ghostfolio_user:ghostfolio_db_password@big-bear-ghostfolio-db:5432/ghostfolio?sslmode=prefer # Defines connection string for PostgreSQL database
+      JWT_SECRET_KEY: 534e820d-da30-4dd3-baf9-0511847c478a # Secret key used for signing JWTs, ensuring security
+      POSTGRES_DB: ghostfolio # Specifies the name of the database within PostgreSQL
+      POSTGRES_USER: ghostfolio_user # Database username for authentication
+      POSTGRES_PASSWORD: ghostfolio_db_password # Database password for authentication
+      REDIS_HOST: big-bear-ghostfolio-redis # Identifies the Redis service by its container name
+      REDIS_PASSWORD: ghostfolio_redis_password # Password required to access Redis service
+      REDIS_PORT: "6379" # Specifies the port Redis is running on, commonly 6379 for Redis services
+    ports:
+      - "3333:3333" # Port mapping between host and container, format: [host]:[container]
+    depends_on: # Defines service dependencies that must be met before this service starts
+      big-bear-ghostfolio-db:
+        condition: service_healthy # Ensures PostgreSQL database is healthy before starting app
+      big-bear-ghostfolio-redis:
+        condition: service_healthy # Ensures Redis service is healthy before starting app
+    networks:
+      - big_bear_ghostfolio_network # Connects the service to a network for internal communication
+
+  # PostgreSQL database service configuration
+  big-bear-ghostfolio-db:
+    container_name: big-bear-ghostfolio-db
+    image: postgres:15.4-alpine # Uses a lightweight Alpine Linux image with PostgreSQL
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ghostfolio
+      POSTGRES_USER: ghostfolio_user
+      POSTGRES_PASSWORD: ghostfolio_db_password
+      PGDATA: /var/lib/postgresql/data # Defines the directory to store database data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ghostfolio -U ghostfolio_user"] # Command to check DB readiness
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - big_bear_ghostfolio_db_data:/var/lib/postgresql/data # Persistent data storage for DB
+    networks:
+      - big_bear_ghostfolio_network # Network attachment for database service
+
+  # Redis service configuration used for caching and session storage
+  big-bear-ghostfolio-redis:
+    container_name: big-bear-ghostfolio-redis
+    image: redis:7-alpine # Uses Redis version 7 on Alpine for a minimal footprint
+    restart: unless-stopped
+    command: --requirepass ghostfolio_redis_password # Secures Redis by requiring a password
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"] # Command to verify Redis is running
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s # Gives Redis enough time to initialize before starting health checks
+    volumes:
+      - big_bear_ghostfolio_redis_data:/data # Persistent storage mapping for Redis data
+    networks:
+      - big_bear_ghostfolio_network # Network attachment for Redis service
+
+# Network configuration section for defining how services will communicate internally
+networks:
+  big_bear_ghostfolio_network:
+    driver: bridge # Uses a bridge network for inter-service communication
+
+# Volume configuration section for defining persistent storage for services
+volumes:
+  big_bear_ghostfolio_db_data: # Named volume for PostgreSQL data persistence
+    driver: local # Uses local volume driver for data persistence
+  big_bear_ghostfolio_redis_data: # Named volume for Redis data persistence
+    driver: local # Uses local volume driver for data persistence
