@@ -2,12 +2,10 @@ name: Renovate AutoMerge
 
 on:
   pull_request:
-    branches:
-      - "renovate/**"
 
 jobs:
   automerge:
-    # if: contains(github.head_ref, 'renovate/')
+    if: contains(github.head_ref, 'renovate/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
