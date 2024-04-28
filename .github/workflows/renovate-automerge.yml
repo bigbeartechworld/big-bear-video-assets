@@ -16,9 +16,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const description = context.payload.pull_request.body;
-            const majorRegex = /\b(major)\b/i; // Regular expression to find "major" in the PR description
-            if (majorRegex.test(description)) {
+            const body = context.payload.pull_request.body;
+            // Regex to find markdown table rows and check if any have 'major' in the Update column
+            const regex = /(?<=\|\s\[)(?:[^\]]+\]\(https?:\/\/[^\s\)]+\)\s\|\s)(major)(?=\s\|)/gi;
+            const isMajorUpdate = regex.test(body);
+
+            if (isMajorUpdate) {
               console.log("Found a major version bump.");
               core.setOutput("automerge", "false");
             } else {
