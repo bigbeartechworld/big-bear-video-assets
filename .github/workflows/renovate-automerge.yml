@@ -1,0 +1,29 @@
+name: Renovate AutoMerge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "renovate/**"
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Analyze PR for Major Version Bump
+        id: analyze
+        uses: actions/github-script@v0.9.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const description = context.payload.pull_request.body;
+            const majorRegex = /\b(major)\b/i; // Regular expression to find "major" in the PR description
+            if (majorRegex.test(description)) {
+              console.log("Found a major version bump.");
+              core.setOutput("automerge", "false");
+            } else {
+              console.log("No major version bump found.");
+              core.setOutput("automerge", "true");
+            }
