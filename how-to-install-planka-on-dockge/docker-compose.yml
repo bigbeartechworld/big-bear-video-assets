@@ -16,9 +16,9 @@ services:
 
     # Volumes to be mounted to the container for persistent storage
     volumes:
-      - big_bear-planka_user_avatars:/app/public/user-avatars
-      - big_bear-planka_project_background_images:/app/public/project-background-images
-      - big_bear-planka_attachments:/app/private/attachments
+      - big_bear_planka_user_avatars:/app/public/user-avatars
+      - big_bear_planka_project_background_images:/app/public/project-background-images
+      - big_bear_planka_attachments:/app/private/attachments
 
     # Ports mapping between host and container for network access
     ports:
@@ -81,7 +81,7 @@ services:
     # Maps a host directory to the container's data directory
     # Ensures that the database data persists across container restarts and deployments
     volumes:
-      - big_bear-planka_postgresql:/var/lib/postgresql/data
+      - big_bear_planka_postgresql:/var/lib/postgresql/data
 
     # Environment variables passed to the PostgreSQL container for configuration
     environment:
@@ -117,11 +117,11 @@ networks:
 
 # Volume definition for the big-bear-planka application
 volumes:
-  big_bear-planka_user_avatars:
+  big_bear_planka_user_avatars:
     driver: local # Use the local volume driver for the user avatars
-  big_bear-planka_project_background_images:
+  big_bear_planka_project_background_images:
     driver: local # Use the local volume driver for the project background images
-  big_bear-planka_attachments:
+  big_bear_planka_attachments:
     driver: local # Use the local volume driver for the attachments
-  big_bear-planka_postgresql:
+  big_bear_planka_postgresql:
     driver: local # Use the local volume driver for the PostgreSQL data
