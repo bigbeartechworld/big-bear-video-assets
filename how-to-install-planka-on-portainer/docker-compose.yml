@@ -69,6 +69,8 @@ services:
 
   # Service definition for the PostgreSQL database used by big-bear-planka
   big-bear-planka-postgres:
+    # Specifies and container name for the PostgreSQL database
+    container_name: big-bear-planka-postgres
     # Specifies the Docker image to use for the PostgreSQL database
     # Using version 14 of PostgreSQL, based on the lightweight Alpine Linux distribution
     image: postgres:14-alpine
