@@ -1,0 +1,33 @@
+# This specifies the version of the Docker Compose file format
+version: "3.8"
+
+# Define the services that make up your application so they can be run together in an isolated environment
+services:
+  # 'big-bear-genmon' is the name of the service
+  big-bear-genmon:
+    # Specifies the Docker image to use for the big-bear-genmon service
+    image: bigbeartechworld/big-bear-genmon:0.0.3
+    # Environment variables to set inside the container
+    environment:
+      - TZ=America/Chicago # Set the timezone to 'America/Chicago'
+    # Ports to expose, mapping the host port to the container port
+    ports:
+      - "20022:22" # Map TCP port 22 in the container to port 20022 on the host
+      - "38443:443" # Map TCP port 443 in the container to port 38443 on the host
+      - "8000:8000" # Map TCP port 8000 in the container to port 8000 on the host
+    # Define the restart policy for the service container
+    restart: unless-stopped # Restart the container unless it is explicitly stopped
+    # Mount host paths or named volumes into the container
+    volumes:
+      - big_bear_genmon_data:/git/genmon # Mount a named volume 'big_bear_genmon_data' to store data persistently at /git/genmon in the container
+      - big_bear_genmon_config:/etc/genmon # Mount a named volume 'big_bear_genmon_config' to store configuration files persistently at /etc/genmon in the container
+      - big_bear_genmon_logs:/var/log # Mount a named volume 'big_bear_genmon_logs' to store logs persistently at /var/log in the container
+
+# Define volumes used by the services
+volumes:
+  big_bear_genmon_data: # Define a volume for persistent data storage
+    driver: local # Use the local driver for persistent data storage
+  big_bear_genmon_config: # Define a volume for persistent configuration storage
+    driver: local # Use the local driver for persistent configuration storage
+  big_bear_genmon_logs: # Define a volume for persistent log storage
+    driver: local # Use the local driver for persistent log storage
