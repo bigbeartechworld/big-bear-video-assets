@@ -5,7 +5,7 @@ services:
   nocodb:
     # Use the 0.111.0 image from nocodb on DockerHub
     # https://hub.docker.com/r/nocodb/nocodb
-    image: "nocodb/nocodb:0.205.1"
+    image: "nocodb/nocodb:0.207.0"
 
     # Map port 7200 on the host to port 8080 on the container
     ports:
