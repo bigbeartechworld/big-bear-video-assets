@@ -6,7 +6,7 @@ services:
   # 'big-bear-genmon' is the name of the service
   big-bear-genmon:
     # Specifies the Docker image to use for the big-bear-genmon service
-    image: bigbeartechworld/big-bear-genmon:0.0.3
+    image: bigbeartechworld/big-bear-genmon:0.0.6
     # Environment variables to set inside the container
     environment:
       - TZ=America/Chicago # Set the timezone to 'America/Chicago'
