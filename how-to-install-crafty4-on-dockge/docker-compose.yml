@@ -1,0 +1,56 @@
+version: "2"
+
+# Service definitions for the big-bear-crafty application
+services:
+  # Service name: big-bear-crafty
+  # The `big-bear-crafty` service definition
+  big-bear-crafty:
+    # Name of the container
+    container_name: big-bear-crafty
+
+    # Image to be used for the container
+    image: registry.gitlab.com/crafty-controller/crafty-4:4.4.0
+
+    # Container restart policy
+    restart: unless-stopped # Restart the container unless it is explicitly stopped
+
+    # Environment variables
+    environment:
+      - TZ=UTC # Timezone
+
+    # Ports mapping between host and container HOST:CONTAINER
+    ports:
+      - 8443:8443 # Web UI
+      - 8123:8123
+      - 19132:19132/udp
+      - 25500-25600:25500-25600
+
+    # Network mode for the container
+    networks:
+      - big_bear_crafty_network
+
+    # Volumes mapping between host and container
+    volumes:
+      - big_bear_crafty_backups:/crafty/backups
+      - big_bear_crafty_logs:/crafty/logs
+      - big_bear_crafty_servers:/crafty/servers
+      - big_bear_crafty_config:/crafty/app/config
+      - big_bear_crafty_import:/crafty/import
+
+# Network definition for the big-bear-crafty application
+networks:
+  big_bear_crafty_network:
+    driver: bridge
+
+# Volumes definitions for the big-bear-crafty application
+volumes:
+  big_bear_crafty_backups:
+    driver: local
+  big_bear_crafty_logs:
+    driver: local
+  big_bear_crafty_servers:
+    driver: local
+  big_bear_crafty_config:
+    driver: local
+  big_bear_crafty_import:
+    driver: local
