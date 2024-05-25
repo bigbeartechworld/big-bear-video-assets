@@ -1,4 +1,4 @@
-version: "2"
+version: "2" # Specifies the version of the Docker Compose file format
 
 # Service definitions for the big-bear-crafty application
 services:
@@ -25,7 +25,7 @@ services:
       - 19132:19132/udp
       - 25500-25600:25500-25600
 
-    # Network mode for the container
+    # Define for this service
     networks:
       - big_bear_crafty_network
 
@@ -45,12 +45,12 @@ networks:
 # Volumes definitions for the big-bear-crafty application
 volumes:
   big_bear_crafty_backups:
-    driver: local
+    driver: local # Use the local driver for the volume
   big_bear_crafty_logs:
-    driver: local
+    driver: local # Use the local driver for the volume
   big_bear_crafty_servers:
-    driver: local
+    driver: local # Use the local driver for the volume
   big_bear_crafty_config:
-    driver: local
+    driver: local # Use the local driver for the volume
   big_bear_crafty_import:
-    driver: local
+    driver: local # Use the local driver for the volume
