@@ -6,7 +6,7 @@ services:
   # Service for LibreSpeed, a speedtest service
   librespeed:
     # The Docker image to use for this service
-    image: linuxserver/librespeed:5.3.2
+    image: linuxserver/librespeed:5.3.3
 
     # The name to give to the container
     container_name: librespeed
