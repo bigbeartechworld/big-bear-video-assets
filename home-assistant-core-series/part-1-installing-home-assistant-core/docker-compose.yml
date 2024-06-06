@@ -5,7 +5,7 @@ services:
     environment:
       - TZ=UTC # Set the timezone for Home Assistant. Replace with your timezone, e.g., "America/New_York"
     volumes:
-      - hass_config:/config # Bind mount a volume for Home Assistant configuration data
+      - ha_config_data:/config # Bind mount a volume for Home Assistant configuration data
       - /var/run/dbus:/var/run/dbus:ro # Read-only bind mount for D-Bus to enable Bluetooth integrations
     restart: unless-stopped # Ensure the container restarts unless explicitly stopped
     ports:
@@ -21,5 +21,5 @@ networks:
     driver: bridge # Use the bridge network driver for container communication
 
 volumes:
-  hass_config:
+  ha_config_data:
     driver: local # Use the local driver for the Home Assistant configuration volume
