@@ -4,10 +4,12 @@ services: # Defines the services that make up the application
   # Service: speedtest-tracker
   speedtest-tracker:
     container_name: speedtest-tracker # Name of the container, useful for referencing and managing the container
+    image: "linuxserver/speedtest-tracker:0.20.5" # Docker image to use, pulling the latest version
     ports:
       - "8080:80" # Maps port 8080 on the host to port 80 in the container; used for HTTP traffic
       - "8443:443" # Maps port 8443 on the host to port 443 in the container; used for HTTPS traffic
     environment: # Environment variables for the container, used to configure the container's software
+      - APP_KEY=base64:Dg5hAOdLC/QD1LY71+FeXlp/8x/MEEjLhnEwP+mYKzM= # The secret key for the application Go to https://speedtest-tracker.dev/ and generate a new key
       - PUID=1000 # User ID for file permissions
       - PGID=1000 # Group ID for file permissions
       - DB_CONNECTION=mysql # Database connection type, indicating MySQL is used
@@ -17,11 +19,11 @@ services: # Defines the services that make up the application
       - DB_USERNAME=speedy # Database username
       - DB_PASSWORD=password # Database password
       - TZ=America/Chicago # Timezone setting for the container; affects how time is reported
+      - SPEEDTEST_SCHEDULE="*/10 * * * *" # The schedule for running the speedtest every 10 minutes
     volumes: # Mounts host paths into the container, for persistent storage or sharing data
       - "/etc/localtime:/etc/localtime:ro" # Mounts the host's localtime as read-only for accurate time syncing
-      - "/DATA/AppData/speedtest-tracker-2/config:/config" # Volume for storing configuration files
-      - "/DATA/AppData/speedtest-tracker-2/web:/etc/ssl/web" # Volume for storing SSL certificates or web-related files
-    image: "ghcr.io/alexjustesen/speedtest-tracker:latest" # Docker image to use, pulling the latest version
+      - "speedtest_tracker_config_data:/config" # Volume for storing configuration files
+      - "speedtest_tracker_web_data:/etc/ssl/web" # Volume for storing SSL certificates or web-related files
     restart: unless-stopped # Container restart policy: restart if the container stops unexpectedly
     depends_on: # Dependency setting, indicating that this service depends on the db service
       - db # Ensures db service is started before speedtest-tracker
@@ -36,4 +38,15 @@ services: # Defines the services that make up the application
       - MARIADB_PASSWORD=password # Password for the database user
       - MARIADB_RANDOM_ROOT_PASSWORD=true # Enables random password generation for the root user for security
     volumes: # Mount for database storage, ensuring data persists across container restarts and removal
-      - /DATA/AppData/speedtest-tracker-2/db:/var/lib/mysql # Maps the host directory to the container's database storage location
+      - speedtest_tracker_db_data:/var/lib/mysql # Maps the host directory to the container's database storage location
+
+volumes:
+  speedtest_tracker_config_data:
+    name: speedtest_tracker_config_data
+    driver: local
+  speedtest_tracker_web_data:
+    name: speedtest_tracker_web_data
+    driver: local
+  speedtest_tracker_db_data:
+    name: speedtest_tracker_db_data
+    driver: local
