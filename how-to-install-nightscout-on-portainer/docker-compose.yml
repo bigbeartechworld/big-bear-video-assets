@@ -1,0 +1,88 @@
+version: "3.8" # Specify the version of Docker Compose
+
+# Service definitions for the big-bear-nightscout application
+services:
+  big-bear-nightscout:
+    # Name of the container
+    container_name: big-bear-nightscout
+
+    # Image to be used for the container
+    image: nightscout/cgm-remote-monitor:15.0.2
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Port mappings for the container
+    ports:
+      - "1337:1337"
+
+    # Environment variables for the container
+    environment:
+      ### Variables for the container
+      NODE_ENV: production
+
+      # TZ - Timezone for the container
+      TZ: Etc/UTC
+
+      ### Overridden variables for Docker Compose setup
+      # The `nightscout` service can use HTTP, because we use `traefik` to serve the HTTPS
+      # and manage TLS certificates
+      INSECURE_USE_HTTP: "true"
+
+      # For all other settings, please refer to the Environment section of the README
+      ### Required variables
+      # MONGO_CONNECTION - The connection string for your Mongo database.
+      # Something like mongodb://sally:sallypass@ds099999.mongolab.com:99999/nightscout
+      # The default connects to the `mongo` included in this docker-compose file.
+      # If you change it, you probably also want to comment out the entire `mongo` service block
+      # and `depends_on` block above.
+      MONGO_CONNECTION: mongodb://big-bear-nightscout-mongo:27017/nightscout
+
+      # API_SECRET - A secret passphrase that must be at least 12 characters long.
+      API_SECRET: 48f875fa-0e03-416f-b9d6-19c9afc4e194 # change_me
+
+      ### Features
+      # ENABLE - Used to enable optional features, expects a space delimited list, such as: careportal rawbg iob
+      # See https://github.com/nightscout/cgm-remote-monitor#plugins for details
+      ENABLE: careportal rawbg iob
+
+      # AUTH_DEFAULT_ROLES (readable) - possible values readable, denied, or any valid role name.
+      # When readable, anyone can view Nightscout without a token. Setting it to denied will require
+      # a token from every visit, using status-only will enable api-secret based login.
+      AUTH_DEFAULT_ROLES: denied
+
+      # For all other settings, please refer to the Environment section of the README
+      # https://github.com/nightscout/cgm-remote-monitor#environment
+
+    # Service dependencies
+    depends_on:
+      - big-bear-nightscout-mongo
+
+    # Networks for the container
+    networks:
+      - big-bear-nightscout-network
+
+  big-bear-nightscout-mongo:
+    # Name of the MongoDB container
+    container_name: big-bear-nightscout-mongo
+
+    # Image to be used for the MongoDB container
+    image: mongo:4.4
+
+    # Networks for the MongoDB container
+    networks:
+      - big-bear-nightscout-network
+
+    # Volume mappings for the MongoDB container
+    volumes:
+      - big_bear_nightscout_mongo_data:/data/db:cached
+
+# Network definitions
+networks:
+  big-bear-nightscout-network:
+    driver: bridge
+
+volumes:
+  big_bear_nightscout_mongo_data:
+    name: big_bear_nightscout_mongo_data
+    driver: local
