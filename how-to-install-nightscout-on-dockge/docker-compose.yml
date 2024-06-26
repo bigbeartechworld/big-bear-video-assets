@@ -25,7 +25,7 @@ services:
       TZ: Etc/UTC
 
       ### Overridden variables for Docker Compose setup
-      # The `nightscout` service can use HTTP, because we use `traefik` to serve the HTTPS
+      # The `nightscout` service can use HTTP, because we can use a proxy like `traefik` to serve the HTTPS
       # and manage TLS certificates
       INSECURE_USE_HTTP: "true"
 
