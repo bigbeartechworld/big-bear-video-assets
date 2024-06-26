@@ -6,7 +6,6 @@ services:
   immich-server:
     container_name: immich-server # Name of the running container
     image: ghcr.io/immich-app/immich-server:v1.106.4 # Image to be used
-    command: ["start.sh", "immich"] # Command to be executed upon container start
     ports: # Mapping ports from the host OS to the container
       - 2283:3001
     volumes: # Mounting directories for persistent data storage
@@ -19,30 +18,6 @@ services:
       DB_PORT: 5432
       REDIS_HOSTNAME: immich-redis
       IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
-    depends_on: # Dependencies to ensure the order of service startup
-      - redis
-      - database
-    restart: always # Policy to always restart the container if it stops
-    networks:
-      - immich-network
-
-  # Configuration for the Immich Microservices
-  immich-microservices:
-    container_name: immich-microservices # Name of the running container
-    image: ghcr.io/immich-app/immich-server:v1.106.4 # Image to be used
-    # extends:  # Feature to use configuration from another service (currently commented out)
-    #   file: hwaccel.yml
-    #   service: hwaccel
-    command: ["start.sh", "microservices"] # Command to be executed upon container start
-    volumes: # Mounting directories for persistent data storage
-      - immich_upload:/usr/src/app/upload
-    environment: # Setting environment variables
-      DB_HOSTNAME: immich-postgres
-      DB_USERNAME: dockge
-      DB_PASSWORD: dockge
-      DB_DATABASE_NAME: immich
-      DB_PORT: 5432
-      REDIS_HOSTNAME: immich-redis
     depends_on: # Dependencies to ensure the order of service startup
       - redis
       - database
