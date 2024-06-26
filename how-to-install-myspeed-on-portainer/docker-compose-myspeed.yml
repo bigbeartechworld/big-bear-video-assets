@@ -24,4 +24,5 @@ services:
 # Here we define Docker volumes for use by our services
 volumes:
   myspeed_data: # Define the named volume 'myspeed_data'
+    name: myspeed_data # Optional: Specifies a name for the volume
     driver: local # Optional: Specifies that the local volume driver should be used
