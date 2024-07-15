@@ -21,4 +21,5 @@ networks:
 
 volumes:
   ha_config_data:
+    name: ha_config_data # Use the custom volume name
     driver: local # Use the local driver for the Home Assistant configuration volume
