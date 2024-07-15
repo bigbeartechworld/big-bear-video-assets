@@ -3,6 +3,8 @@ services:
     image: linuxserver/homeassistant:latest # Use the latest Home Assistant image from Linuxserver
     container_name: big-bear-homeassistant # Set a custom container name
     environment:
+      - PUID=1000 # UID of the 'abc' user
+      - PGID=1000 # GID of the 'abc' user
       - TZ=UTC # Set the timezone for Home Assistant. Replace with your timezone, e.g., "America/New_York"
     volumes:
       - ha_config_data:/config # Bind mount a volume for Home Assistant configuration data
