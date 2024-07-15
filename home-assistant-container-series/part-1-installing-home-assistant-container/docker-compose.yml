@@ -8,10 +8,7 @@ services:
       - ha_config_data:/config # Bind mount a volume for Home Assistant configuration data
       - /var/run/dbus:/var/run/dbus:ro # Read-only bind mount for D-Bus to enable Bluetooth integrations
     restart: unless-stopped # Ensure the container restarts unless explicitly stopped
-    ports:
-      - "8123:8123" # Expose port 8123 for accessing Home Assistant web interface
-    networks:
-      - big_bear_homeassistant_network # Connect the container to a custom network
+    network_mode: host # Use the host network mode
     cap_add:
       - NET_ADMIN # Add NET_ADMIN capability for network administration tasks
       - NET_RAW # Add NET_RAW capability for raw packet access
