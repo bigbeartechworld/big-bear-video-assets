@@ -1,0 +1,123 @@
+version: "3.8" # Specifies the version of the Docker Compose file format
+
+# Service definitions for the big-bear-plant-it application
+services:
+  # Service name: big-bear-plant-it
+  # The `big-bear-plant-it` service definition
+  big-bear-plant-it:
+    # Name of the container
+    container_name: big-bear-plant-it
+
+    # Image to be used for the container
+    image: msdeluise/plant-it-server:0.7.4
+
+    # Container restart policy
+    restart: unless-stopped
+
+    environment:
+      # MySQL database host
+      - MYSQL_HOST=big-bear-plant-it-db
+      # MySQL database port
+      - MYSQL_PORT=3306
+      # MySQL database username
+      - MYSQL_USERNAME=root
+      # MySQL database password
+      - MYSQL_PSW=9c75c563-b549-40e6-a0d2-360cf9a962ea
+      # MySQL database name
+      - MYSQL_DATABASE=plantit
+      # MySQL root password
+      - MYSQL_ROOT_PASSWORD=9c75c563-b549-40e6-a0d2-360cf9a962ea
+      # JWT secret for authentication
+      - JWT_SECRET=putTheSecretHere
+      # JWT expiration time
+      - JWT_EXP=1
+      # Users limit (-1 means no limit)
+      - USERS_LIMIT=-1
+      # Directory for file uploads
+      - UPLOAD_DIR=/upload-dir
+      # API port
+      - API_PORT=8080
+      # Trefle API key (currently empty)
+      - TREFLE_KEY=
+      # Log level
+      - LOG_LEVEL=DEBUG
+      # Allowed origins for CORS
+      - ALLOWED_ORIGINS=*
+      # Cache time-to-live (TTL) in seconds
+      - CACHE_TTL=86400
+      # Cache host
+      - CACHE_HOST=big-bear-plant-it-cache
+      # Cache port
+      - CACHE_PORT=6379
+      # SSL enabled flag
+      - SSL_ENABLED=false
+      # Path to SSL certificates
+      - CERTIFICATE_PATH=/certificates/
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Volume for uploads
+      - "big_bear_plant_it_upload_dir:/upload-dir"
+      # Volume for SSL certificates
+      - "big_bear_plant_it_certificates:/certificates"
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 8080 of the host to port 8080 of the container
+      - "8080:8080"
+      # Mapping port 3000 of the host to port 3000 of the container
+      - "3000:3000"
+
+    networks:
+      # Network definition
+      - big_bear_plant_it_network
+
+  # Service definition for the database
+  big-bear-plant-it-db:
+    # Name of the database container
+    container_name: big-bear-plant-it-db
+    # Image for the database
+    image: mysql:8.0
+    # Restart policy for the database container
+    restart: always
+    environment:
+      # MySQL database name
+      - MYSQL_DATABASE=plantit
+      # MySQL root password
+      - MYSQL_ROOT_PASSWORD=9c75c563-b549-40e6-a0d2-360cf9a962ea
+    ports:
+      # Mapping port 3306 of the host to port 3306 of the container
+      - "3306:3306"
+    volumes:
+      # Volume for MySQL data
+      - "big_bear_plant_it_mysql:/var/lib/mysql"
+    networks:
+      # Network definition
+      - big_bear_plant_it_network
+
+  # Service definition for the cache
+  big-bear-plant-it-cache:
+    # Name of the cache container
+    container_name: big-bear-plant-it-cache
+    # Image for the cache
+    image: redis:7.2.1
+    # Restart policy for the cache container
+    restart: always
+    networks:
+      # Network definition
+      - big_bear_plant_it_network
+
+# Network configuration
+networks:
+  # Network definition
+  big_bear_plant_it_network:
+    driver: bridge
+
+# Define named volumes for data persistence
+volumes:
+  big_bear_plant_it_upload_dir:
+    driver: local
+  big_bear_plant_it_certificates:
+    driver: local
+  big_bear_plant_it_mysql:
+    driver: local
