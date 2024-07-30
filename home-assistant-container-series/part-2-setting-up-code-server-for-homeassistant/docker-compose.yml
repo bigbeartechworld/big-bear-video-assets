@@ -1,0 +1,40 @@
+services:
+  big-bear-homeassistant:
+    image: linuxserver/homeassistant:2024.7.4 # Use the latest Home Assistant image from Linuxserver
+    container_name: big-bear-homeassistant # Set a custom container name
+    environment:
+      - PUID=1000 # UID of the 'abc' user
+      - PGID=1000 # GID of the 'abc' user
+      - TZ=UTC # Set the timezone for Home Assistant. Replace with your timezone, e.g., "America/New_York"
+    volumes:
+      - ha_config_data:/config # Bind mount a volume for Home Assistant configuration data
+      - /var/run/dbus:/var/run/dbus:ro # Read-only bind mount for D-Bus to enable Bluetooth integrations
+    restart: unless-stopped # Ensure the container restarts unless explicitly stopped
+    network_mode: host # Use the host network mode
+    cap_add:
+      - NET_ADMIN # Add NET_ADMIN capability for network administration tasks
+      - NET_RAW # Add NET_RAW capability for raw packet access
+
+  big-bear-homeassistant-code-server:
+    image: linuxserver/code-server:4.91.1
+    container_name: big-bear-homeassistant-code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      # - PASSWORD=password #optional
+      # - HASHED_PASSWORD= #optional
+      # - SUDO_PASSWORD=password #optional
+      # - SUDO_PASSWORD_HASH= #optional
+      # - PROXY_DOMAIN=code-server.my.domain #optional
+      # - DEFAULT_WORKSPACE=/config/workspace #optional
+    volumes:
+      - /var/lib/docker/volumes/ha_config_data/_data:/config/homeassistant
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+
+volumes:
+  ha_config_data:
+    name: ha_config_data # Use the custom volume name
+    driver: local # Use the local driver for the Home Assistant configuration volume
