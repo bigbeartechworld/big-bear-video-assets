@@ -4,7 +4,7 @@ services: # Defines the services that make up the application
   # Service: speedtest-tracker
   speedtest-tracker:
     container_name: speedtest-tracker # Name of the container, useful for referencing and managing the container
-    image: "linuxserver/speedtest-tracker:0.20.7" # Docker image to use, pulling the latest version
+    image: "linuxserver/speedtest-tracker:0.20.8" # Docker image to use, pulling the latest version
     ports:
       - "8080:80" # Maps port 8080 on the host to port 80 in the container; used for HTTP traffic
       - "8443:443" # Maps port 8443 on the host to port 443 in the container; used for HTTPS traffic
