@@ -11,9 +11,6 @@ services:
       - /var/run/dbus:/var/run/dbus:ro # Read-only bind mount for D-Bus to enable Bluetooth integrations
     restart: unless-stopped # Ensure the container restarts unless explicitly stopped
     network_mode: host # Use the host network mode
-    cap_add:
-      - NET_ADMIN # Add NET_ADMIN capability for network administration tasks
-      - NET_RAW # Add NET_RAW capability for raw packet access
 
   big-bear-homeassistant-code-server:
     image: linuxserver/code-server:4.91.1
