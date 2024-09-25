@@ -25,8 +25,8 @@ services:
       - /dev:/dev
       # Mount the host's /etc/localtime file to the container's /etc/localtime file (read-only)
       - /etc/localtime:/etc/localtime:ro
-      # Mount the host's root directory to the container's /portainer directory
-      - /:/portainer
+      # Mount the host's root directory to the container's /dockge directory
+      - /:/dockge
 
     # Map port 7681 on the host to port 7681 on the container
     ports:
