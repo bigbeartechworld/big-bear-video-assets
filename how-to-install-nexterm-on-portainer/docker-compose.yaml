@@ -1,0 +1,39 @@
+# Service definitions for the big-bear-nexterm application
+services:
+  # Service name: big-bear-nexterm
+  # The `big-bear-nexterm` service definition
+  big-bear-nexterm:
+    # Name of the container
+    container_name: big-bear-nexterm
+
+    # Image to be used for the container
+    image: germannewsmaker/nexterm:1.0.2-OPEN-PREVIEW
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mount the nexterm_data volume to store app data
+      - big_bear_nexterm_data:/app/data
+
+    # Ports mapping between host and container
+    ports:
+      # Map port 6989 on the host to port 6989 in the container
+      - "6989:6989"
+
+    # Networks
+    networks:
+      # Network definition
+      - big_bear_nexterm_network
+
+# Networks
+networks:
+  big_bear_nexterm_network:
+    name: big_bear_nexterm_network
+
+# Volumes
+volumes:
+  big_bear_nexterm_data:
+    name: big_bear_nexterm_data
+    driver: local
