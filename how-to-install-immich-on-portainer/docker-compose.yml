@@ -7,7 +7,7 @@ services:
     container_name: immich-server # Name of the running container
     image: ghcr.io/immich-app/immich-server:v1.118.2 # Image to be used
     ports: # Mapping ports from the host OS to the container
-      - 2283:3001
+      - 2283:2283
     volumes: # Mounting directories for persistent data storage
       - immich_upload:/usr/src/app/upload
     environment: # Setting environment variables
