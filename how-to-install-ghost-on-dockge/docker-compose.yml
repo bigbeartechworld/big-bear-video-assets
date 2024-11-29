@@ -2,7 +2,7 @@ version: "3" # Use Docker Compose version 3
 
 services:
   ghost:
-    image: ghost:5.101.3-alpine # Use the Ghost Docker image
+    image: ghost:5.101.4-alpine # Use the Ghost Docker image
     restart: on-failure # Restart the container on failure
     environment:
       - database__client=mysql # Set Ghost's database client to MySQL
