@@ -4,7 +4,7 @@ version: "3.7" # Docker Compose file version
 services:
   # Define the service for the OneDev application server
   big-bear-onedev:
-    image: 1dev/server:11.6.2 # Use the specified OneDev server image
+    image: 1dev/server:11.6.3 # Use the specified OneDev server image
     container_name: big-bear-onedev # Container name for easy reference
     environment: # Environment variables for configuration
       - hibernate_dialect=io.onedev.server.persistence.PostgreSQLDialect # Specify the Hibernate dialect for PostgreSQL
