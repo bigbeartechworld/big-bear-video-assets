@@ -19,7 +19,7 @@ services:
 
     # Volumes to be mounted to the container
     volumes:
-      # Mounting the local /DATA/AppData/$AppID directory to /data inside the container
+      # Mounting the local big_bear_umbrel_data directory to /data inside the container
       - big_bear_umbrel_data:/data
 
       # Mounting docker.sock to allow docker management via Umbrel
