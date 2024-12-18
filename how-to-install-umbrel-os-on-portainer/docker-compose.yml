@@ -1,0 +1,34 @@
+# Service definitions for the big-bear-umbrel application
+services:
+  # Service name: big-bear-umbrel-os
+  # The `big-bear-umbrel-os` service definition
+  big-bear-umbrel-os:
+    # Name of the container
+    container_name: big-bear-umbrel-os
+
+    # Image to be used for the container
+    image: dockurr/umbrel:1.3.0
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 8080 of the host to port 80 of the container
+      - "8080:80"
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting the local /DATA/AppData/$AppID directory to /data inside the container
+      - big_bear_umbrel_data:/data
+
+      # Mounting docker.sock to allow docker management via Umbrel
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    # Stop grace period for the container
+    stop_grace_period: 1m
+
+volumes:
+  big_bear_umbrel_data:
+    name: big_bear_umbrel_data
+    driver: local
