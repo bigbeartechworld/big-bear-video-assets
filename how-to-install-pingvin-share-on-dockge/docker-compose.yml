@@ -7,7 +7,7 @@ services:
   pingvin-share:
     # Name of the service
 
-    image: stonith404/pingvin-share:v1.7.2
+    image: stonith404/pingvin-share:v1.8.0
     # Image to be used for this service
 
     restart: unless-stopped
