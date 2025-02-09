@@ -4,7 +4,7 @@ version: "3.8" # Docker Compose file format version
 services:
   # Service name: big-bear-actual-server
   big-bear-actual-server:
-    image: actualbudget/actual-server:25.2.0 # The Docker image to use (latest version of actual-server)
+    image: actualbudget/actual-server:25.2.1 # The Docker image to use (latest version of actual-server)
     container_name: big-bear-actual-server # Name of the container instance
     volumes:
       - actual_budget_data:/data # Mounting the project directory inside the container
