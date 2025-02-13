@@ -3,7 +3,7 @@ version: "3" # Specifies the version of the Docker Compose file format. Version 
 services:
   # Defines the Nextcloud service
   big-bear-nextcloud:
-    image: linuxserver/nextcloud:30.0.5 # Docker image with specific version for the Nextcloud service.
+    image: linuxserver/nextcloud:30.0.6 # Docker image with specific version for the Nextcloud service.
     container_name: big-bear-nextcloud # Custom container name for easy reference.
     environment:
       - PUID=1000 # User ID for file permission management outside the container.
