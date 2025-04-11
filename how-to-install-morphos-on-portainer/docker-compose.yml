@@ -1,0 +1,40 @@
+# Service definitions for the big-bear-morphos application
+services:
+  # Main service configuration for the morphos application
+  # This service provides a web interface running on port 8080 for file conversion
+  big-bear-morphos:
+    # Name of the container
+    container_name: big-bear-morphos
+
+    # Image to be used for the container specifies the btop version and source
+    image: ghcr.io/danvergara/morphos-server:0.6.0
+
+    # Container restart policy - restarts the container unless manually stopped
+    restart: unless-stopped
+
+    # Volume mappings required for system integration
+    # These mounts allow the container to interact with the host system
+    volumes:
+      # Temporary storage for morphos
+      - big_bear_morphos_tmp:/tmp
+
+    # Map port 8080 on the host to port 8080 on the container
+    ports:
+      - "8080:8080"
+
+    # Healthcheck configuration for the morphos application
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1
+      interval: 60s
+      retries: 3
+      start_period: 20s
+      timeout: 30s
+
+# Volume definitions for the morphos application
+volumes:
+  # Temporary storage for morphos
+  big_bear_morphos_tmp:
+    # Name of the volume
+    name: big_bear_morphos_tmp
+    # Driver to be used for the volume
+    driver: local
