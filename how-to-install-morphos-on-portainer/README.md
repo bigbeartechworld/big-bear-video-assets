@@ -1,5 +1,7 @@
 ## Morphos: Self-Hosted File Conversion Server
 
+[![Morphos Tutorial](https://img.youtube.com/vi/fu60xDXPcPE/0.jpg)](https://youtu.be/fu60xDXPcPE)
+
 ### Overview
 
 Today, we are forced to rely on third-party services to convert files to other formats. This poses a serious threat to our privacy, especially when handling files containing highly sensitive personal data. Such services could misuse our data, intentionally or unintentionally, and compromise our security.
