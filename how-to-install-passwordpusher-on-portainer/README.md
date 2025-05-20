@@ -1,5 +1,7 @@
 ## Password Pusher: Self-Hosted Password Sharing Server
 
+[![How to install Password Pusher on Portainer](https://img.youtube.com/vi/xQSz8w6Ee8c/0.jpg)](https://www.youtube.com/watch?v=xQSz8w6Ee8c)
+
 Give your users the tools to be secure by default.
 
 Password Pusher is an open source application to communicate sensitive information over the web. Secret links expire after a certain number of views and/or time has passed.
