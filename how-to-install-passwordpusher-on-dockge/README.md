@@ -1,5 +1,7 @@
 ## Password Pusher: Self-Hosted Password Sharing Server
 
+[![How to install Password Pusher on Docker](https://img.youtube.com/vi/s-0CBXN-KhY/0.jpg)](https://www.youtube.com/watch?v=s-0CBXN-KhY)
+
 Give your users the tools to be secure by default.
 
 Password Pusher is an open source application to communicate sensitive information over the web. Secret links expire after a certain number of views and/or time has passed.
