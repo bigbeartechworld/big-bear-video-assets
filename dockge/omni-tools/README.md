@@ -4,6 +4,8 @@
 
 Omni Tools is a self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fast, accessible utilities right from your browser!
 
+https://community.bigbeartechworld.com/t/added-omni-tools-to-dockge/3643?u=dragonfire1119
+
 ### Features
 
 We strive to offer a variety of tools, including:
