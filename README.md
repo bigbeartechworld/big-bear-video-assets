@@ -8,8 +8,8 @@ This repository contains installation guides and Docker Compose files for variou
 
 - **[Casa-Os](./casa-os/)** - 19 applications
 - **[Cosmos-Cloud](./cosmos-cloud/)** - 9 applications
-- **[Dockge](./dockge/)** - 62 applications
-- **[Portainer](./portainer/)** - 58 applications
+- **[Dockge](./dockge/)** - 63 applications
+- **[Portainer](./portainer/)** - 59 applications
 - **[Proxmox-Ubuntu](./proxmox-ubuntu/)** - 3 applications
 - **[Runtipi](./runtipi/)** - 2 applications
 
