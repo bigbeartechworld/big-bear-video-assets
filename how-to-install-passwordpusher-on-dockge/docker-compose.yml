@@ -7,7 +7,7 @@ services:
     container_name: big-bear-pwpush
 
     # Image to be used for the container
-    image: pglombardo/pwpush:1.56.3
+    image: pglombardo/pwpush:1.56.4
 
     # Container restart policy
     restart: unless-stopped
