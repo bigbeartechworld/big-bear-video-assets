@@ -1,5 +1,7 @@
 # Big Bear Video Assets
 
+YouTube Link: https://www.youtube.com/@bigbeartechworld
+
 This repository contains installation guides and Docker Compose files for various self-hosted applications across different platforms.
 
 ## Supported Platforms
@@ -14,15 +16,21 @@ This repository contains installation guides and Docker Compose files for variou
 ## Structure
 
 Each platform directory contains subdirectories for individual applications with:
+
 - `docker-compose.yml` - Docker Compose configuration
 - `README.md` - Installation instructions and notes
 
 ## Contributing
 
 When adding new installation guides, please follow the existing structure:
+
 ```
 platform/
 └── app-name/
     ├── docker-compose.yml
     └── README.md
 ```
+
+# Support My Work
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E5NDK3I)
