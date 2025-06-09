@@ -4,7 +4,7 @@ version: "3" # Specifies the version of the Docker Compose file format
 services:
   # Service name: linkwarden
   # The `linkwarden` service definition
-  linkwarden:
+  big-bear-linkwarden:
     # Name of the container
     container_name: big-bear-linkwarden
 
@@ -16,7 +16,7 @@ services:
 
     # Volumes to be mounted to the container
     volumes:
-      - linkwarden_data:/data/data
+      - big-bear-linkwarden-data:/data/data
 
     # Environment variables
     environment:
@@ -32,10 +32,10 @@ services:
 
     # Networks to be attached to the container
     networks:
-      - linkwarden_network
+      - big-bear-linkwarden-network
 
   # Postgres database
-  linkwarden-db:
+  big-bear-linkwarden-db:
     # Name of the container
     container_name: big-bear-linkwarden-db
     # Image to be used
@@ -49,24 +49,43 @@ services:
       - POSTGRES_DB=big-bear-linkwarden
     # Volumes to be mounted
     volumes:
-      - linkwarden_db:/var/lib/postgresql/data
+      - big-bear-linkwarden-db:/var/lib/postgresql/data
     # Networks to be attached
     networks:
-      - linkwarden_network
+      - big-bear-linkwarden-network
+
+  big-bear-meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - big-bear-meilisearch-data:/meili_data
+    networks:
+      - big-bear-linkwarden-network
 
 # Networks to be created
 networks:
   # Network name
-  linkwarden_network:
+  big-bear-linkwarden-network:
     # Set the driver to bridge
     driver: bridge
 
 # Volumes to be created
 volumes:
   # Volume name
-  linkwarden_data:
+  big-bear-linkwarden-data:
+    # Volume name
+    name: big-bear-linkwarden-data
     # Use the local storage driver
     driver: local
-  linkwarden_db:
+  big-bear-linkwarden-db:
+    # Volume name
+    name: big-bear-linkwarden-db
+    # Use the local storage driver
+    driver: local
+  big-bear-meilisearch-data:
+    # Volume name
+    name: big-bear-meilisearch-data
     # Use the local storage driver
     driver: local
