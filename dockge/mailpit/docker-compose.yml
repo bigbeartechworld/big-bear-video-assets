@@ -2,7 +2,7 @@ version: "3" # Docker Compose file version
 
 services:
   app:
-    image: axllent/mailpit:v1.26.0 # Docker image for the 'app' service
+    image: axllent/mailpit:v1.26.1 # Docker image for the 'app' service
     container_name: mailpit # Name of the container
     restart: unless-stopped # Restart policy for the container (unless stopped)
     volumes:
