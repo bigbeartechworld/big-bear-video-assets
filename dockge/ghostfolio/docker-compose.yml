@@ -5,7 +5,7 @@ services:
   # Main application service configuration for Ghostfolio
   big-bear-ghostfolio:
     container_name: big-bear-ghostfolio # Unique identifier for this container to distinguish it from others
-    image: ghostfolio/ghostfolio:2.179.0 # Specifies the Docker image version to use
+    image: ghostfolio/ghostfolio:2.180.0 # Specifies the Docker image version to use
     restart: unless-stopped # Policy that determines the restart behavior, here set to only stop manually
     environment: # Environment variables are key-value pairs that configure the application
       NODE_ENV: production # Sets the mode of Node.js environment indicating production mode
