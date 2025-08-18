@@ -1,6 +1,6 @@
 services:
   big-bear-homeassistant:
-    image: linuxserver/homeassistant:2025.8.1 # Use the latest Home Assistant image from Linuxserver
+    image: linuxserver/homeassistant:2025.8.2 # Use the latest Home Assistant image from Linuxserver
     container_name: big-bear-homeassistant # Set a custom container name
     environment:
       - PUID=1000 # UID of the 'abc' user
