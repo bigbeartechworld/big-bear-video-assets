@@ -23,9 +23,9 @@ services:
       # Secret key for the application
       - SECRET_KEY=your-secret-key-here
       # Username for login
-      - USERNAME=admin
+      - USERNAME=bigbear
       # Password for login
-      - PASSWORD=changeme
+      - PASSWORD=dockge
 
     # Ports mapping between host and container
     ports:
