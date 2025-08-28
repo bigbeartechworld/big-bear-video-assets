@@ -1,0 +1,33 @@
+version: "3" # Specifies the version of the Docker Compose file format
+
+services:
+  # Service name: big-bear-dockpeek
+  # The `big-bear-dockpeek` service definition
+  big-bear-dockpeek:
+    # Name of the container
+    container_name: big-bear-dockpeek
+
+    # Image to be used for the container
+    image: ghcr.io/dockpeek/dockpeek:v1.5.5
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Mounting docker.sock to allow docker management via DockPeek
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    # Environment variables
+    environment:
+      # Secret key for the application
+      - SECRET_KEY=your-secret-key-here
+      # Username for login
+      - USERNAME=bigbear
+      # Password for login
+      - PASSWORD=portainer
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 3420 of the host to port 8000 of the container
+      - "3420:8000"
