@@ -1,0 +1,57 @@
+services:
+  # Service name: big-bear-portracker
+  # The `big-bear-portracker` service definition
+  big-bear-portracker:
+    # Name of the container
+    container_name: big-bear-portracker
+
+    # Image to be used for the container
+    image: mostafawahied/portracker:latest
+
+    # Container restart policy
+    restart: unless-stopped
+
+    # PID mode for network discovery
+    pid: host
+
+    # Security options and capabilities
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+
+    # Environment variables
+    environment:
+      # Web application port (default: 4999)
+      - PORT=4999
+      # SQLite database file path
+      - DATABASE_PATH=/data/portracker.db
+      # Scan result cache duration in milliseconds (default: 60000ms)
+      - CACHE_TIMEOUT_MS=60000
+      # Disable caching (default: false)
+      - DISABLE_CACHE=false
+      # Include UDP ports in scans (default: false)
+      - INCLUDE_UDP=false
+      # Verbose logging (default: false)
+      - DEBUG=false
+      # Optional: TrueNAS API key for enhanced discovery
+      # - TRUENAS_API_KEY=your_api_key_here
+
+    # Volumes to be mounted to the container
+    volumes:
+      # Data persistence
+      - big-bear-portracker-data:/data
+      # Docker socket for service discovery
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    # Ports mapping between host and container
+    ports:
+      # Mapping port 4999 of the host to port 4999 of the container
+      - "4999:4999"
+
+# Define volumes
+volumes:
+  big-bear-portracker-data:
+    driver: local
+    name: big-bear-portracker-data
