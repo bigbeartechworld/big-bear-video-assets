@@ -3,7 +3,7 @@ version: "3.0" # Specifies the Docker Compose file format version.
 services:
   big-bear-wallos:
     container_name: big-bear-wallos # Sets a custom name for the container.
-    image: bellamy/wallos:4.3.0 # Specifies the Docker image to use for the service.
+    image: bellamy/wallos:4.4.1 # Specifies the Docker image to use for the service.
     ports:
       - "8282:80" # Maps port 80 inside the container to port 8282 on the host.
     environment:
