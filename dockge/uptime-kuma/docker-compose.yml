@@ -2,7 +2,7 @@ version: "3.8" # Specifies the version of Docker Compose file format being used.
 
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:1 # Specifies the Docker image to use for the 'uptime-kuma' service.
+    image: louislam/uptime-kuma:2 # Specifies the Docker image to use for the 'uptime-kuma' service.
     container_name: uptime-kuma # Sets the name of the Docker container to 'uptime-kuma'.
     volumes:
       - uptime-kuma:/app/data # Mounts a volume named 'uptime-kuma' to the '/app/data' directory in the container.
