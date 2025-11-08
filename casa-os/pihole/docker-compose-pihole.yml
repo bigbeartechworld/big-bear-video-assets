@@ -10,7 +10,7 @@ services:
 
     # Image to use for this container
     # Use the specified version of the pihole image
-    image: pihole/pihole:2025.10.3
+    image: pihole/pihole:2025.11.0
 
     # Expose and map ports (host:container)
     ports:
