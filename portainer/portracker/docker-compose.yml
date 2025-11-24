@@ -6,7 +6,7 @@ services:
     container_name: big-bear-portracker
 
     # Image to be used for the container
-    image: mostafawahied/portracker:1.1
+    image: mostafawahied/portracker:1.2
 
     # Container restart policy
     restart: unless-stopped
