@@ -3,7 +3,7 @@ version: "3" # Specifies the version of the Docker Compose file format. This ver
 services:
   big_bear_libretranslate:
     container_name: big_bear_libretranslate # Gives the container a custom name for easier identification in Docker commands and logs.
-    image: libretranslate/libretranslate:v1.8.2 # Specifies the Docker image and version to use for this service.
+    image: libretranslate/libretranslate:v1.8.3 # Specifies the Docker image and version to use for this service.
     restart: unless-stopped # Sets the restart policy to always restart the container unless it was manually stopped.
     ports:
       - "5000:5000" # Maps port 5000 of the container to port 5000 on the host, allowing external access to the service.
