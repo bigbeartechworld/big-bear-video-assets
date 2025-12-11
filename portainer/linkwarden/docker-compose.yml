@@ -55,7 +55,7 @@ services:
       - big-bear-linkwarden-network
 
   big-bear-meilisearch:
-    image: getmeili/meilisearch:v1.28.2
+    image: getmeili/meilisearch:v1.29.0
     restart: always
     env_file:
       - .env
