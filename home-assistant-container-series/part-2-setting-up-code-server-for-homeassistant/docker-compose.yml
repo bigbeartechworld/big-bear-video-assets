@@ -13,7 +13,7 @@ services:
     network_mode: host # Use the host network mode
 
   big-bear-homeassistant-code-server:
-    image: linuxserver/code-server:4.106.3
+    image: linuxserver/code-server:4.107.0
     container_name: big-bear-homeassistant-code-server
     environment:
       - PUID=1000
