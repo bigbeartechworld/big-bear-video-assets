@@ -3,7 +3,7 @@ version: "3.8" # Specifies the version of the Docker Compose file format.
 services:
   big-bear-ihatemoney:
     container_name: big-bear-ihatemoney # Sets a custom container name.
-    image: ihatemoney/ihatemoney:6.1.5 # Specifies the Docker image and version to use.
+    image: ihatemoney/ihatemoney:7.0.0 # Specifies the Docker image and version to use.
     ports:
       - "8001:8000" # Maps port 8001 of the container to port 8000 on the host.
     environment:
