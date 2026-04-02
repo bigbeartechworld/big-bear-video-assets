@@ -7,7 +7,7 @@ services:
     container_name: big-bear-beszel
 
     # Image to be used for the container
-    image: henrygd/beszel:0.18.5
+    image: henrygd/beszel:0.18.6
 
     # Container restart policy
     restart: unless-stopped
