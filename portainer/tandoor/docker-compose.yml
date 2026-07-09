@@ -57,7 +57,7 @@ services:
     networks:
       - big_bear_tandoor_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "tandoor"]
+      test: ["CMD-SHELL", "pg_isready -U tandoor -d tandoordb"]
       interval: 10s
       timeout: 5s
       retries: 5
