@@ -18,20 +18,20 @@ services:
       - PUID=1000
       - PGID=1000
       # TZ sets the timezone for the container.
-      - TZ=Etc/UTC
+      - TZ=Etc/UTC+1
       # MYSQL_ROOT_PASSWORD sets the root password for MariaDB.
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=Sivispacem
       # MYSQL_DATABASE sets the name of a database to be created on image startup (optional).
       - MYSQL_DATABASE=nextcloud
       # MYSQL_USER & MYSQL_PASSWORD are used to create a new user (optional).
-      - MYSQL_USER=bigbear
-      - MYSQL_PASSWORD=password
+      - MYSQL_USER=Copernicuslaan
+      - MYSQL_PASSWORD=Sivispacem
       # REMOTE_SQL allows linking to a remote SQL server (optional).
       - REMOTE_SQL=
 
     # The 'volumes' key maps paths on the host to paths in the container.
     volumes:
-      # Map '/DATA/AppData/nextcloud-mariadb' on the host to '/config' inside the container.
+      # Map '/HDD Storage/DATA/AppData/nextcloud-mariadb' on the host to '/config' inside the container.
       - /DATA/AppData/nextcloud-mariadb:/config
 
     # The 'ports' key maps ports on the host to ports in the container.
