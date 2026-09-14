@@ -34,6 +34,14 @@ services:
       # Map '/DATA/AppData/nextcloud-mariadb' on the host to '/config' inside the container.
       - /DATA/AppData/nextcloud-mariadb:/config
 
+    # The 'read_only' key prevents processes from writing to the container's root filesystem.
+    read_only: true
+
+    # The 'tmpfs' key provides writable in-memory mounts for paths the container needs to write to at runtime.
+    tmpfs:
+      - /run
+      - /tmp
+
     # The 'ports' key maps ports on the host to ports in the container.
     ports:
       # Map port 3306 on the host to port 3306 inside the container.
