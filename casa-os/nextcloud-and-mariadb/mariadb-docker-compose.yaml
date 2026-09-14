@@ -41,3 +41,11 @@ services:
 
     # The 'restart' key specifies the restart policy for the container.
     restart: unless-stopped
+
+    # The 'security_opt' key sets security options for the container.
+    security_opt:
+      # Prevent privilege escalation via setuid/setgid binaries.
+      - no-new-privileges:true
+
+    # The 'read_only' key prevents the container from writing to its root filesystem.
+    read_only: true
